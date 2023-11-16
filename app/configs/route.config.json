@@ -1,10 +1,11 @@
 {
   "routes": [
     {
-      "route": "/api/v1/user",
-      "method": "GET",
-      "controller": "../components/user/controller/UserController",
-      "secured": false
+      "route": "/api/v1/admin",
+      "method": "post",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"createAdmin"
     }
   ]
 }

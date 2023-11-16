@@ -10,21 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-      customerDetail.belongsTo(models.agent,{
-        foreignKey:'agent_id',
-        as:'agent'
-      })
-      customerDetail.hasMany(models.policy,{
-        foreignKey: 'customer_id',
-        as:'policy'
-      })
-      customerDetail.hasMany(models.feedback,{
-        foreignKey: 'customer_id',
-        as:'feedback'
-      })
-    }
+    // static associate(models) {
+    //   // define association here
+    //   customerDetail.belongsTo(models.agent,{
+    //     foreignKey:'agent_id',
+    //     as:'agent'
+    //   })
+    //   customerDetail.hasMany(models.policy,{
+    //     foreignKey: 'customer_id',
+    //     as:'policy'
+    //   })
+    //   customerDetail.hasMany(models.feedback,{
+    //     foreignKey: 'customer_id',
+    //     as:'feedback'
+    //   })
+    // }
   }
   customerDetail.init({
     customerName: DataTypes.STRING,

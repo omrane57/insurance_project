@@ -29,7 +29,7 @@ class RouteConfig {
         'Undefined "controller" property in "lib/configs/route.config.json"'
       );
     }
-
+  
     try {
       // eslint-disable-next-line import/no-dynamic-require
       controller = require(routeItem.controller);

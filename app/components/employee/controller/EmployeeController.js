@@ -1,14 +1,13 @@
 const { validate } = require("uuid");
 const nodemailer=require('nodemailer')
-const userConfig = require("../../../model-config/userConfig");
-const userService = require("../service/EmployeeService");
+const employeeService = require("../service/EmployeeService");
 const { HttpStatusCode } = require("axios");
 const {v4}=require('uuid');
 const { validateUuid } = require("../../../utils/uuid");
 const { checkJwtHS256 } = require("../../../middleware/authService");
 class EmployeeController{
     constructor(){
-      this.newUserService=userService
+      this.newEmployeeService=employeeService
     }
 
 
@@ -21,7 +20,7 @@ class EmployeeController{
         if(typeof username!="string"||typeof password!="string"||typeof role!="string"){
             throw new Error("Invalid Input")
         }
-          const [token,user] = await this.newUserService.login(settingsConfig, bodyElement,queryParams);
+          const [token,user] = await this.newEmployeeService.login(settingsConfig, bodyElement,queryParams);
          
           res.set(process.env.AUTH_CLIENT_NAME,token)
 
@@ -43,78 +42,78 @@ class EmployeeController{
         }
     }
 
-async forgotPassword(settingsConfig,req,res,next){
-    try {
-        let response=await this.sendEmail(req.body.recipient_email,req.body.OTP)
-        return res.status(HttpStatusCode.Ok).json({response})
-    } catch (error) {
-        next(error)
-    }
-}
-    async sendEmail(recipient_email, OTP) {
-        console.log(recipient_email, "REEEEEEEEE", OTP, "OTPPPPPPPP")
-        return new Promise((resolve, reject) => {
-            var transporter = nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: 'helpdeskbankingapp@gmail.com',
-                    pass: 'pccp pfrk vwwe rsvy',
-                },
-                // service: 'gmail',
-                // host: 'smtp.gmail.com',
-                // auth: {
-                //     user: 'your gmail here',
-                //     pass: 'your app generated password here',
-                // },
-            });
+// async forgotPassword(settingsConfig,req,res,next){
+//     try {
+//         let response=await this.sendEmail(req.body.recipient_email,req.body.OTP)
+//         return res.status(HttpStatusCode.Ok).json({response})
+//     } catch (error) {
+//         next(error)
+//     }
+// }
+//     async sendEmail(recipient_email, OTP) {
+//         console.log(recipient_email, "REEEEEEEEE", OTP, "OTPPPPPPPP")
+//         return new Promise((resolve, reject) => {
+//             var transporter = nodemailer.createTransport({
+//                 service: "gmail",
+//                 auth: {
+//                     user: 'helpdeskbankingapp@gmail.com',
+//                     pass: 'pccp pfrk vwwe rsvy',
+//                 },
+//                 // service: 'gmail',
+//                 // host: 'smtp.gmail.com',
+//                 // auth: {
+//                 //     user: 'your gmail here',
+//                 //     pass: 'your app generated password here',
+//                 // },
+//             });
 
-            const mail_configs = {
-                from: 'helpdeskbankingapp@gmail.com',
-                to: recipient_email,
-                subject: "AkshayBankingApp 101 PASSWORD RECOVERY",
-                html: `<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CodePen - OTP Email Template</title>
+//             const mail_configs = {
+//                 from: 'helpdeskbankingapp@gmail.com',
+//                 to: recipient_email,
+//                 subject: "AkshayBankingApp 101 PASSWORD RECOVERY",
+//                 html: `<!DOCTYPE html>
+// <html lang="en" >
+// <head>
+//   <meta charset="UTF-8">
+//   <title>CodePen - OTP Email Template</title>
   
 
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-  <div style="margin:50px auto;width:70%;padding:20px 0">
-    <div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
-    </div>
-    <p style="font-size:1.1em">Hi,</p>
-    <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
-    <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
-    <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
-    <hr style="border:none;border-top:1px solid #eee" />
-    <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Koding 101 Inc</p>
-      <p>1600 Amphitheatre Parkway</p>
-      <p>California</p>
-    </div>
-  </div>
-</div>
-<!-- partial -->
+// </head>
+// <body>
+// <!-- partial:index.partial.html -->
+// <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+//   <div style="margin:50px auto;width:70%;padding:20px 0">
+//     <div style="border-bottom:1px solid #eee">
+//       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
+//     </div>
+//     <p style="font-size:1.1em">Hi,</p>
+//     <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
+//     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
+//     <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
+//     <hr style="border:none;border-top:1px solid #eee" />
+//     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
+//       <p>Koding 101 Inc</p>
+//       <p>1600 Amphitheatre Parkway</p>
+//       <p>California</p>
+//     </div>
+//   </div>
+// </div>
+// <!-- partial -->
   
-</body>
-</html>`,
-            };
-            console.log(mail_configs, "mailconfigs//////////");
-            transporter.sendMail(mail_configs, function (error, info) {
-                if (error) {
-                    console.log(error);
-                    throw new Error("An error has occured")
-                    // return reject({ message: An error has occured });
-                }
-                return resolve({ message: "Email sent succesfuly" });
-            });
-        });
-    }
+// </body>
+// </html>`,
+//             };
+//             console.log(mail_configs, "mailconfigs//////////");
+//             transporter.sendMail(mail_configs, function (error, info) {
+//                 if (error) {
+//                     console.log(error);
+//                     throw new Error("An error has occured")
+//                     // return reject({ message: An error has occured });
+//                 }
+//                 return resolve({ message: "Email sent succesfuly" });
+//             });
+//         });
+//     }
     async createUser(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
@@ -133,38 +132,38 @@ async forgotPassword(settingsConfig,req,res,next){
     async createAdmin(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
-        logger.info(`[USER_CONTROLLER] : Inside createAdmin`);
-        const{firstName,lastName,username,password}=req.body
-     const user=await this.newUserService.getUserByUsername(settingsConfig,username)
+        logger.info(`[EMPLOYEE_CONTROLLER] : Inside createAdmin`);
+        const{employeeName,role,username,password,status}=req.body
+     const user=await this.newEmployeeService.getUserByUsername(settingsConfig,username)
      if(user.length != 0){
         throw new Error("username Already Taken")
     }
-        const data =await this.newUserService.createAdmin(settingsConfig,req.body)
+        const data =await this.newEmployeeService.createAdmin(settingsConfig,req.body)
         res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
             next(error)
         }
     }
-    async check(settingsConfig, req, res, next) {
-        try {
-            const logger = settingsConfig.logger;
-            logger.info(`[UserController] : Inside check`);
-            const{username}=req.body
+    // async check(settingsConfig, req, res, next) {
+    //     try {
+    //         const logger = settingsConfig.logger;
+    //         logger.info(`[UserController] : Inside check`);
+    //         const{username}=req.body
 
 
-            if(!username){
-               return res.status(200).json({result:false})
-            }
-            const payload=checkJwtHS256(settingsConfig,req,res,next)
-            if(!payload){
-                return res.status(200).json({result:false})
-            }
-            const response=await this.newUserService.verifyUser(settingsConfig,payload,username)
-            return res.status(200).json({result:response})
-        } catch (error) {
-            return res.status(200).json({result:false})
-        }
-    }
+    //         if(!username){
+    //            return res.status(200).json({result:false})
+    //         }
+    //         const payload=checkJwtHS256(settingsConfig,req,res,next)
+    //         if(!payload){
+    //             return res.status(200).json({result:false})
+    //         }
+    //         const response=await this.newUserService.verifyUser(settingsConfig,payload,username)
+    //         return res.status(200).json({result:response})
+    //     } catch (error) {
+    //         return res.status(200).json({result:false})
+    //     }
+    // }
     async checkPassword(settingsConfig,req,res,next){
         try {
             const logger = settingsConfig.logger;
@@ -176,7 +175,7 @@ async forgotPassword(settingsConfig,req,res,next){
           
                 throw new Error("invalid username")
             }
-            const newpssd=await this.newUserService.checkingPassword(settingsConfig,username,oldPassword,newPassword)
+            const newpssd=await this.newEmployeeService.checkingPassword(settingsConfig,username,oldPassword,newPassword)
             if(newpssd==0){
                 throw new Error("cannot update password")
             }

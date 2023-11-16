@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-    city.belongsTo(models.state,{
-        foreignKey:'state_id',
-        as:'state'
-      })
-    }
+    // static associate(models) {
+    //   // define association here
+    // city.belongsTo(models.state,{
+    //     foreignKey:'state_id',
+    //     as:'state'
+    //   })
+    // }
   }
   city.init({
     cityName: DataTypes.STRING,

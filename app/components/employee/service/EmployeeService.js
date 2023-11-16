@@ -49,13 +49,12 @@ class EmployeeService{
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
-          logger.info(`[UserService] : Inside createAdmin`);
+          logger.info(`[EmployeeService] : Inside createAdmin`);
           const hashpassword = await bcrypt.hash(body.password, 12);
           body.id = v4();
-          body.isAdmin = true;
           body.password = hashpassword;
           
-          const data = await userConfig.model.create(body, { transaction: t });
+          const data = await employeeConfig.model.create(body, { transaction: t });
           await t.commit();
           return data;
         } catch (error) {
@@ -117,8 +116,8 @@ class EmployeeService{
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
-          logger.info(`[UserService] : Inside getUserByUsername`);
-          const data = await userConfig.model.findAll({
+          logger.info(`[EmployeeService] : Inside getUserByUsername`);
+          const data = await employeeConfig.model.findAll({
             where: { username: username },
             paranoid:false,
             transaction: t,

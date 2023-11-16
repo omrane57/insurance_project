@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-      insuranceType.hasMany(models.plan,{
-        foreignKey: 'insurance_type_id',
-        as:'plan'
-      })
-    }
+    // static associate(models) {
+    //   // define association here
+    //   insuranceType.hasMany(models.plan,{
+    //     foreignKey: 'insurance_type_id',
+    //     as:'plan'
+    //   })
+    // }
     
   }
   insuranceType.init({

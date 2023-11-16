@@ -1,7 +1,6 @@
 // const userConfig = require("../model-config/user-config");
 const { StatusCodes } = require("http-status-codes")
 const { validateUuid } = require("../utils/uuid");
-const { USER_ROLES } = require("@nexsalesdev/market-sizing-data-model/services/constants");
 
 const roleBasedQueryInjector = async (settingsConfig, req, res, next) => {
   const logger = settingsConfig.logger;
