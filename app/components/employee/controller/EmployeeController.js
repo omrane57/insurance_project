@@ -114,30 +114,36 @@ class EmployeeController{
 //             });
 //         });
 //     }
-    async createUser(settingsConfig,req,res,next){
-        try {
-        const logger = settingsConfig.logger;
-        logger.info(`[USER_CONTROLLER] : Inside createAdmin`);
-        const{name,username,password,age,gender}=req.body
-     const user=await this.newUserService.getUserByUsername(settingsConfig,username)
-     if(user.length != 0){
-        throw new Error("username Already Taken")
-    }
-        const data =await this.newUserService.createUser(settingsConfig,req.body)
-        res.status(HttpStatusCode.Ok).json(await data)
-        } catch (error) {
-            next(error)
+async createEmployee(settingsConfig,req,res,next){
+    try {
+    const logger = settingsConfig.logger;
+    logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
+    const{employeeName,role,username,password,email}=req.body
+        if(typeof employeeName!="string"||typeof role!="string"||typeof username!="string"||typeof password!="string"||typeof email!="string"){
+            throw new Error("invalid input")
         }
+     const user=await this.newEmployeeService.getEmpByUsername(settingsConfig,username)
+    if(user.length != 0){
+     throw new Error("username Already Taken")
     }
+    const data =await this.newEmployeeService.createEmployee(settingsConfig,req.body)
+    res.status(HttpStatusCode.Ok).json(await data)
+    } catch (error) {
+        next(error)
+    }
+}
     async createAdmin(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
         logger.info(`[EMPLOYEE_CONTROLLER] : Inside createAdmin`);
-        const{employeeName,role,username,password,status}=req.body
-     const user=await this.newEmployeeService.getUserByUsername(settingsConfig,username)
-     if(user.length != 0){
-        throw new Error("username Already Taken")
-    }
+        const{employeeName,role,username,password,email}=req.body
+            if(typeof employeeName!="string"||typeof role!="string"||typeof username!="string"||typeof password!="string"||typeof email!="string"){
+                throw new Error("invalid input")
+            }
+         const user=await this.newEmployeeService.getEmpByUsername(settingsConfig,username)
+        if(user.length != 0){
+         throw new Error("username Already Taken")
+        }
         const data =await this.newEmployeeService.createAdmin(settingsConfig,req.body)
         res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
@@ -203,25 +209,25 @@ class EmployeeController{
             
         }
     }
-    async deleteUser(settingsConfig,req,res,next){
+    async deleteEmployee(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
-        logger.info(`[USER_CONTROLLER] : Inside deleteUser`);
-        const{userId}=req.params
+        logger.info(`[EMPLOYEE_CONTROLLER] : Inside deleteEmployee`);
+        const{empId}=req.params
        
-        await this.newUserService.deleteUser(settingsConfig,userId,req.query)
+        await this.newEmployeeService.deleteEmployee(settingsConfig,empId,req.query)
         res.set('X-Total-Count',0)
-        res.status(HttpStatusCode.Ok).json("User Deleted Successfully")
+        res.status(HttpStatusCode.Ok).json("Employee Deleted Successfully")
         } catch (error) {
             next(error)
         }
     }
-    async getAllUser(settingsConfig,req,res,next){
+    async getAllEmployee(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
         const queryParams=req.query
-        logger.info(`[USER_CONTROLLER] : Inside getAllUser`);
-        const {rows,count} =await this.newUserService.getAllUser(settingsConfig,queryParams)
+        logger.info(`[EMPLOYEE_CONTROLLER] : Inside getAllEmployee`);
+        const {rows,count} =await this.newEmployeeService.getAllEmpoyee(settingsConfig,queryParams)
         res.set('X-Total-Count',count)
         res.status(HttpStatusCode.Ok).json(await rows)
         } catch (error) {
@@ -229,37 +235,37 @@ class EmployeeController{
         }
     }
     
-    async getUser(settingsConfig,req,res,next){
+    async getEmp(settingsConfig,req,res,next){
         try {
         const logger = settingsConfig.logger;
-        logger.info(`[USER_CONTROLLER] : Inside getUser`);
-        const {userId}=req.params
-        validateUuid(userId)
-        const  data=await this.newUserService.getUser(settingsConfig,userId,req.params)
+        logger.info(`[EMPLOYEE_CONTROLLER] : Inside getEmp`);
+        const {empId}=req.params
+        
+        const  data=await this.newEmployeeService.getEmployee(settingsConfig,empId,req.params)
         res.set('X-Total-Count',1)
         res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
             next(error)
         }
     }
-    async updateUser(settingsConfig, req, res, next) {
+    async updateEmployee(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;
-            logger.info(`[UserController] : Inside updateUser`);
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside updateEmployee`);
             
-            const {userId} = req.params
+            const {empId} = req.params
             
-            const user = await this.newUserService.getUser(settingsConfig, userId,req.query)
-            if(user.length == 0){
-                throw new Error("User Not Found!")
+            const emp = await this.newEmployeeService.getEmployee(settingsConfig, empId,req.query)
+            if(emp.length == 0){
+                throw new Error("Emp Not Found!")
             }
 
-            const [userToBeUpdated] = await this.newUserService.updateUser(settingsConfig,userId, req.body)
+            const [empToBeUpdated] = await this.newEmployeeService.updateEmployee(settingsConfig,empId, req.body)
            
-            if(userToBeUpdated==0){
+            if(empToBeUpdated==0){
                 throw new Error("Could Not Update user")
             }
-            res.status(HttpStatusCode.Ok).json("user updated sucessfully")
+            res.status(HttpStatusCode.Ok).json("employee updated sucessfully")
             return
         } catch (error) {
             next(error)
