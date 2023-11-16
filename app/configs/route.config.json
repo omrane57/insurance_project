@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "route": "/api/v1/user",
+      "method": "GET",
+      "controller": "../components/user/controller/UserController",
+      "secured": false
+    }
+  ]
+}
+
