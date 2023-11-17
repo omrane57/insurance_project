@@ -37,6 +37,7 @@ class EmployeeService{
           body.password = hashpassword;
           
           const data = await userConfig.model.create(body, { transaction: t });
+          
           await t.commit();
           return data;
         } catch (error) {
