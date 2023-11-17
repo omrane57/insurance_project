@@ -9,17 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
-      // define association here
-      plan.belongsTo(models.insuranceType,{
-        foreignKey:'insurance_type_id',
-        as:'insuranceType'
-      })
-      plan.hasMany(models.policy,{
-        foreignKey: 'plan_id',
-        as:'policy'
-      })
-    }
+    // static associate(models) {
+    //   // define association here
+    //   plan.belongsTo(models.insuranceType,{
+    //     foreignKey:'insurance_type_id',
+    //     as:'insuranceType'
+    //   })
+    //   plan.hasMany(models.policy,{
+    //     foreignKey: 'plan_id',
+    //     as:'policy'
+    //   })
+    // }
   }
   plan.init({
     policyTermMin: DataTypes.INTEGER,

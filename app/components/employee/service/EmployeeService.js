@@ -26,18 +26,18 @@ class EmployeeService{
     //       return association;
     //     }
     //   }
-      async createUser(settingsConfig, body) {
+      async createEmployee(settingsConfig, body) {
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
-          logger.info(`[UserService] : Inside createAdmin`);
+          logger.info(`[EmployeeService] : Inside createEmployee`);
           const hashpassword = await bcrypt.hash(body.password, 12);
           body.id = v4();
-          body.isAdmin = false;
+          body.username="Emp"+body.username
           body.password = hashpassword;
+          body.status=true;
           
-          const data = await userConfig.model.create(body, { transaction: t });
-          
+          const data = await employeeConfig.model.create(body, { transaction: t });
           await t.commit();
           return data;
         } catch (error) {
@@ -50,13 +50,15 @@ class EmployeeService{
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
-          logger.info(`[UserService] : Inside createAdmin`);
+          logger.info(`[EmployeeService] : Inside createAdmin`);
+        
           const hashpassword = await bcrypt.hash(body.password, 12);
           body.id = v4();
-          body.isAdmin = true;
+          body.username="Adm"+body.username
           body.password = hashpassword;
+          body.status=true;
           
-          const data = await userConfig.model.create(body, { transaction: t });
+          const data = await employeeConfig.model.create(body, { transaction: t });
           await t.commit();
           return data;
         } catch (error) {
@@ -114,12 +116,12 @@ class EmployeeService{
         throw error;
     }
   }
-      async getUserByUsername(settingsConfig, username) {
+      async getEmpByUsername(settingsConfig, username) {
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
-          logger.info(`[UserService] : Inside getUserByUsername`);
-          const data = await userConfig.model.findAll({
+          logger.info(`[EmployeeService] : Inside getEmpByUsername`);
+          const data = await employeeConfig.model.findAll({
             where: { username: username },
             paranoid:false,
             transaction: t,
@@ -132,19 +134,19 @@ class EmployeeService{
         }
       }
     
-    async deleteUser(settingsConfig,userId,queryParams){
+    async deleteEmployee(settingsConfig,empId,queryParams){
         const t= await startTransaction() 
         try {
         const logger = settingsConfig.logger;
-        logger.info(`[USER_SERVICE] : Inside deleteUser`);
-        const userExitence=await this.getUser(settingsConfig,userId,queryParams)
-        console.log(userExitence);
-       if(userExitence==null)
+        logger.info(`[EmployeeService] : Inside deleteEmployee`);
+        const empExitence=await this.getEmployee(settingsConfig,empId,queryParams)
+      
+       if(empExitence==null)
 {
-   throw new Error("User Does Not Exists")
+   throw new Error("Employee Does Not Exists")
 
 }       
-   const data= await userConfig.model.destroy({where:{id:userId}})
+   const data= await employeeConfig.model.destroy({where:{id:empId}})
         t.commit()
         return data
         } catch (error) {
@@ -152,36 +154,38 @@ class EmployeeService{
             throw error
         }
     }
-    async getAllUser(settingsConfig,queryParams){
+    async getAllEmpoyee(settingsConfig,queryParams){
         const t= await startTransaction() 
-        console.log(queryParams );
         try {
             const selectArray={
-                id:userConfig.fieldMapping.id,
-                name:userConfig.fieldMapping.name,
-                age:userConfig.fieldMapping.age,
-                gender:userConfig.fieldMapping.gender,
-                isAdmin:userConfig.fieldMapping.isAdmin
+                id:employeeConfig.fieldMapping.id,
+                employeeName:employeeConfig.fieldMapping.employeeName,
+                username:employeeConfig.fieldMapping.username,
+                email:employeeConfig.fieldMapping.email,
+                role:employeeConfig.fieldMapping.role
+
                 
             }
             const attributeToReturn=Object.values(selectArray)
             const includeQuery = queryParams.include || [];
-            let association = [];
-            if (queryParams.include) {
-              delete queryParams.include;
-            }
-            if (includeQuery) {
-              association = this.createAssociation(includeQuery);
-              console.log("UserService",association);
-            }
+
+
+            // let association = [];
+            // if (queryParams.include) {
+            //   delete queryParams.include;
+            // }
+            // if (includeQuery) {
+            //   association = this.createAssociation(includeQuery);
+            //   console.log("UserService",association);
+            // }
       
         const logger = settingsConfig.logger;
-        logger.info(`[USER_SERVICE] : Inside getAllUser`);
-        const data=await userConfig.model.findAndCountAll({ transaction: t,
-            ...parseFilterQueries(queryParams, userConfig.filter),
+        logger.info(`[Employee_SERVICE] : Inside getAllEmployee`);
+        const data=await employeeConfig.model.findAndCountAll({ transaction: t,
+            ...parseFilterQueries(queryParams, employeeConfig.filter),
             attributes: attributeToReturn,
-            ...parseLimitAndOffset(queryParams),
-             ...preloadAssociations(association),  
+            ...parseLimitAndOffset(queryParams)
+            //  ...preloadAssociations(association),  
         
         
         })
@@ -197,15 +201,15 @@ class EmployeeService{
             throw error
         }
     }
-    async getUser(settingsConfig,userId,queryParams){
+    async getEmployee(settingsConfig,empId,queryParams){
         const t= await startTransaction() 
         try {
             const attributeToReturn={
-                id:userConfig.fieldMapping.id,
-                name:userConfig.fieldMapping.name,
-                age:userConfig.fieldMapping.age,
-                gender:userConfig.fieldMapping.gender,
-                isAdmin:userConfig.fieldMapping.isAdmin
+              id:employeeConfig.fieldMapping.id,
+              employeeName:employeeConfig.fieldMapping.employeeName,
+              username:employeeConfig.fieldMapping.username,
+              email:employeeConfig.fieldMapping.email,
+              role:employeeConfig.fieldMapping.role
                 
             }
             // const attributeToReturn=Object.values(selectArray)
@@ -215,9 +219,9 @@ class EmployeeService{
               selectArray = Object.values(attributeToReturn);
             }
         const logger = settingsConfig.logger;
-        logger.info(`[USER_SERVICE] : Inside getUser`);
-        const data = await userConfig.model.findOne({
-            where: { id: userId },
+        logger.info(`[Employee_SERVICE] : Inside getEmployee`);
+        const data = await employeeConfig.model.findOne({
+            where: { id: empId },
             attributes: selectArray,
             transaction: t,
             
@@ -240,19 +244,19 @@ if(data==null)
 
 
 
-async updateUser(settingsConfig, userId, body) {
+async updateEmployee(settingsConfig, userId, body) {
     const t = await startTransaction();
     try {
       const logger = settingsConfig.logger;
-      logger.info(`[UserService] : Inside updateUser`);
-      let userToBeUpdate = await userConfig.model.update(body, {
+      logger.info(`[Employee_SERVICE] : Inside updateEmployee`);
+      let empToBeUpdate = await employeeConfig.model.update(body, {
         where: { id: userId },
         transaction: t,
       });
    
       t.commit();
 
-      return userToBeUpdate;
+      return empToBeUpdate;
    
     } catch (error) {
       await t.rollback();

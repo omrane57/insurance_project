@@ -1,10 +1,39 @@
 {
   "routes": [
     {
-      "route": "/api/v1/user",
+      "route": "/api/v1/admin",
+      "method": "POST",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"createAdmin"
+    },
+    {
+      "route": "/api/v1/employee",
+      "method": "POST",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"createEmployee"
+    },
+    {
+      "route": "/api/v1/employee",
       "method": "GET",
-      "controller": "../components/user/controller/UserController",
-      "secured": false
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"getAllEmployee"
+    },
+    {
+      "route": "/api/v1/employee/:empId",
+      "method": "GET",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"getEmp"
+    },
+    {
+      "route": "/api/v1/employee/:empId",
+      "method": "DELETE",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"deleteEmployee"
     }
   ]
 }

@@ -9,7 +9,7 @@ class EmployeeConfig{
         this.fieldMapping=Object.freeze({
             id:"id",
             employeeName:"employeeName",
-            isAdmin:"isAdmin",
+            role:"role",
             username:"username",
             password:"password",
             email:"email"
