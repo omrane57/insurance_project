@@ -1,5 +1,29 @@
 {
   "routes": [
+
+    {
+      "route": "/api/v1/login",
+      "method": "POST",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"login"
+    },
+
+    {
+      "route": "/api/v1/logout",
+      "method": "POST",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"logout"
+    },
+    {
+      "route": "/api/v1/resetpassword",
+      "method": "POST",
+      "controller":"../components/user/controller/UserController",
+      "secured": false,
+      "action":"resetPassword"
+    },
+
     {
       "route": "/api/v1/admin",
       "method": "POST",
@@ -34,7 +58,120 @@
       "controller": "../components/employee/controller/EmployeeController",
       "secured": false,
       "action":"deleteEmployee"
+    },
+    {
+      "route": "/api/v1/employee/:empId",
+      "method": "PUT",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"updateEmployee"
+    },
+    {
+      "route": "/api/v1/state",
+      "method": "POST",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"createState"
+    },
+    {
+      "route": "/api/v1/state",
+      "method": "GET",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"getAllState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "GET",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"getState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "PUT",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"updateState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "DELETE",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"deleteState"
+    },
+    {
+      "route": "/api/v1/city/:stateId",
+      "method": "POST",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"createCity"
+    },
+    {
+      "route": "/api/v1/city/:stateId",
+      "method": "GET",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"getAllCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "GET",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"getCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "PUT",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"updateCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "DELETE",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"deleteCity"
+    },
+    {
+      "route": "/api/v1/tax",
+      "method": "POST",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"createTax"
+    },
+    {
+      "route": "/api/v1/tax",
+      "method": "GET",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"getAllTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "GET",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"getTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "PUT",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"updateTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "DELETE",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"deleteTax"
     }
+
   ]
 }
 

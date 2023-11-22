@@ -14,6 +14,7 @@ const { StatusCodes } = require("http-status-codes")
 const SettingsConfig = require('./app/configs/settings/settings-config');
 const settingsConfig = new SettingsConfig();
 const routeConfig = require('./app/configs/route-config');
+const cookieParser = require('cookie-parser')
 
 const {
     initLogger
@@ -38,6 +39,9 @@ function configureApplication(app) {
         },
         exposedHeaders: ['X-Total-Count'],
     };
+    
+
+    app.use(cookieParser())
     app.use(cors(corsOptions));
 
     app.use((req, res, next) => {

@@ -1,249 +1,88 @@
 const { validate } = require("uuid");
-const nodemailer=require('nodemailer')
+const nodemailer = require('nodemailer')
 const employeeService = require("../service/EmployeeService");
 const { HttpStatusCode } = require("axios");
-const {v4}=require('uuid');
+const { v4 } = require('uuid');
 const { validateUuid } = require("../../../utils/uuid");
 const { checkJwtHS256 } = require("../../../middleware/authService");
-class EmployeeController{
-    constructor(){
-      this.newEmployeeService=employeeService
+class EmployeeController {
+    constructor() {
+        this.newEmployeeService = employeeService
     }
-
-
-    async login(settingsConfig, req, res, next) {
-        try {
-          const logger = settingsConfig.logger;
-          logger.info(`[Employee_CONTROLLER] : Inside login`);
-          const {username,password,role} = req.body;
-          const queryParams=req.query
-        if(typeof username!="string"||typeof password!="string"||typeof role!="string"){
-            throw new Error("Invalid Input")
-        }
-          const [token,user] = await this.newEmployeeService.login(settingsConfig, bodyElement,queryParams);
-         
-          res.set(process.env.AUTH_CLIENT_NAME,token)
-
-          res.cookie(process.env.AUTH_CLIENT_NAME, token);
-          return res.status(200).json(user);
-        } catch (error) {
-          next(error);
-        }
-      }
-    async logout(settingsConfig, req, res, next) {
+    async createEmployee(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;
-            logger.info(`[UserController] : Inside logout`);
-            
-            res.cookie(process.env.AUTH_COOKIE_NAME,"", {expires: new Date(Date.now())});
-            res.status(HttpStatusCode.Ok).json("Logout")
-        } catch (error) {
-            next(error)
-        }
-    }
-
-// async forgotPassword(settingsConfig,req,res,next){
-//     try {
-//         let response=await this.sendEmail(req.body.recipient_email,req.body.OTP)
-//         return res.status(HttpStatusCode.Ok).json({response})
-//     } catch (error) {
-//         next(error)
-//     }
-// }
-//     async sendEmail(recipient_email, OTP) {
-//         console.log(recipient_email, "REEEEEEEEE", OTP, "OTPPPPPPPP")
-//         return new Promise((resolve, reject) => {
-//             var transporter = nodemailer.createTransport({
-//                 service: "gmail",
-//                 auth: {
-//                     user: 'helpdeskbankingapp@gmail.com',
-//                     pass: 'pccp pfrk vwwe rsvy',
-//                 },
-//                 // service: 'gmail',
-//                 // host: 'smtp.gmail.com',
-//                 // auth: {
-//                 //     user: 'your gmail here',
-//                 //     pass: 'your app generated password here',
-//                 // },
-//             });
-
-//             const mail_configs = {
-//                 from: 'helpdeskbankingapp@gmail.com',
-//                 to: recipient_email,
-//                 subject: "AkshayBankingApp 101 PASSWORD RECOVERY",
-//                 html: `<!DOCTYPE html>
-// <html lang="en" >
-// <head>
-//   <meta charset="UTF-8">
-//   <title>CodePen - OTP Email Template</title>
-  
-
-// </head>
-// <body>
-// <!-- partial:index.partial.html -->
-// <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-//   <div style="margin:50px auto;width:70%;padding:20px 0">
-//     <div style="border-bottom:1px solid #eee">
-//       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
-//     </div>
-//     <p style="font-size:1.1em">Hi,</p>
-//     <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
-//     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
-//     <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
-//     <hr style="border:none;border-top:1px solid #eee" />
-//     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-//       <p>Koding 101 Inc</p>
-//       <p>1600 Amphitheatre Parkway</p>
-//       <p>California</p>
-//     </div>
-//   </div>
-// </div>
-// <!-- partial -->
-  
-// </body>
-// </html>`,
-//             };
-//             console.log(mail_configs, "mailconfigs//////////");
-//             transporter.sendMail(mail_configs, function (error, info) {
-//                 if (error) {
-//                     console.log(error);
-//                     throw new Error("An error has occured")
-//                     // return reject({ message: An error has occured });
-//                 }
-//                 return resolve({ message: "Email sent succesfuly" });
-//             });
-//         });
-//     }
-async createEmployee(settingsConfig,req,res,next){
-    try {
-    const logger = settingsConfig.logger;
-    logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
-    const{employeeName,role,username,password,email}=req.body
-        if(typeof employeeName!="string"||typeof role!="string"||typeof username!="string"||typeof password!="string"||typeof email!="string"){
-            throw new Error("invalid input")
-        }
-     const user=await this.newEmployeeService.getEmpByUsername(settingsConfig,username)
-    if(user.length != 0){
-     throw new Error("username Already Taken")
-    }
-    const data =await this.newEmployeeService.createEmployee(settingsConfig,req.body)
-    res.status(HttpStatusCode.Ok).json(await data)
-    } catch (error) {
-        next(error)
-    }
-}
-    async createAdmin(settingsConfig,req,res,next){
-        try {
-        const logger = settingsConfig.logger;
-        logger.info(`[EMPLOYEE_CONTROLLER] : Inside createAdmin`);
-        const{employeeName,role,username,password,email}=req.body
-            if(typeof employeeName!="string"||typeof role!="string"||typeof username!="string"||typeof password!="string"||typeof email!="string"){
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
+            const { employeeName, role, username, password, email } = req.body
+            if (typeof employeeName != "string" || typeof role != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
                 throw new Error("invalid input")
             }
-         const user=await this.newEmployeeService.getEmpByUsername(settingsConfig,username)
-        if(user.length != 0){
-         throw new Error("username Already Taken")
-        }
-        const data =await this.newEmployeeService.createAdmin(settingsConfig,req.body)
-        res.status(HttpStatusCode.Ok).json(await data)
+            const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, username)
+            if (user.length != 0) {
+                throw new Error("username Already Taken")
+            }
+            const data = await this.newEmployeeService.createEmployee(settingsConfig, req.body)
+            res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
             next(error)
         }
     }
-    // async check(settingsConfig, req, res, next) {
-    //     try {
-    //         const logger = settingsConfig.logger;
-    //         logger.info(`[UserController] : Inside check`);
-    //         const{username}=req.body
-
-
-    //         if(!username){
-    //            return res.status(200).json({result:false})
-    //         }
-    //         const payload=checkJwtHS256(settingsConfig,req,res,next)
-    //         if(!payload){
-    //             return res.status(200).json({result:false})
-    //         }
-    //         const response=await this.newUserService.verifyUser(settingsConfig,payload,username)
-    //         return res.status(200).json({result:response})
-    //     } catch (error) {
-    //         return res.status(200).json({result:false})
-    //     }
-    // }
-    async checkPassword(settingsConfig,req,res,next){
+    async createAdmin(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;
-              logger.info(`[UserController] : Inside checkPassword`);
-            
-            const{username,oldPassword,newPassword}=req.body
-            const payload=checkJwtHS256(settingsConfig,req,res,next)
-            if(payload.username!=username){
-          
-                throw new Error("invalid username")
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside createAdmin`);
+            const { employeeName, role, username, password, email } = req.body
+            if (typeof employeeName != "string" || typeof role != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
+                throw new Error("invalid input")
             }
-            const newpssd=await this.newEmployeeService.checkingPassword(settingsConfig,username,oldPassword,newPassword)
-            if(newpssd==0){
-                throw new Error("cannot update password")
+            const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, username)
+            if (user.length != 0) {
+                throw new Error("username Already Taken")
             }
-            res.status(HttpStatusCode.Ok).json("password reset sucessfully")
-            return
-    
+            const data = await this.newEmployeeService.createAdmin(settingsConfig, req.body)
+            res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
             next(error)
         }
     }
-    async reset(settingsConfig,req,res,next){
+
+ 
+
+    async deleteEmployee(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;
-            logger.info(`[USER_CONTROLLER] : Inside reset`);
-            const{username,newPassword}=req.body
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside deleteEmployee`);
+            const { empId } = req.params
 
-            const passwordReset=await this.newUserService.resetpass(settingsConfig,username,newPassword)
-            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4",passwordReset);
-            if(passwordReset==0){
-                throw new Error("cannot reset password")
-            }
-            res.status(HttpStatusCode.Ok).json("password reset sucessfully")
-            return
-        } catch (error) {
-            
-        }
-    }
-    async deleteEmployee(settingsConfig,req,res,next){
-        try {
-        const logger = settingsConfig.logger;
-        logger.info(`[EMPLOYEE_CONTROLLER] : Inside deleteEmployee`);
-        const{empId}=req.params
-       
-        await this.newEmployeeService.deleteEmployee(settingsConfig,empId,req.query)
-        res.set('X-Total-Count',0)
-        res.status(HttpStatusCode.Ok).json("Employee Deleted Successfully")
+            await this.newEmployeeService.deleteEmployee(settingsConfig, empId, req.query)
+            res.set('X-Total-Count', 0)
+            res.status(HttpStatusCode.Ok).json("Employee Deleted Successfully")
         } catch (error) {
             next(error)
         }
     }
-    async getAllEmployee(settingsConfig,req,res,next){
+    async getAllEmployee(settingsConfig, req, res, next) {
         try {
-        const logger = settingsConfig.logger;
-        const queryParams=req.query
-        logger.info(`[EMPLOYEE_CONTROLLER] : Inside getAllEmployee`);
-        const {rows,count} =await this.newEmployeeService.getAllEmpoyee(settingsConfig,queryParams)
-        res.set('X-Total-Count',count)
-        res.status(HttpStatusCode.Ok).json(await rows)
+            const logger = settingsConfig.logger;
+            const queryParams = req.query
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside getAllEmployee`);
+            const { rows, count } = await this.newEmployeeService.getAllEmpoyee(settingsConfig, queryParams)
+            res.set('X-Total-Count', count)
+            res.status(HttpStatusCode.Ok).json(await rows)
         } catch (error) {
             next(error)
         }
     }
-    
-    async getEmp(settingsConfig,req,res,next){
+
+    async getEmp(settingsConfig, req, res, next) {
         try {
-        const logger = settingsConfig.logger;
-        logger.info(`[EMPLOYEE_CONTROLLER] : Inside getEmp`);
-        const {empId}=req.params
-        
-        const  data=await this.newEmployeeService.getEmployee(settingsConfig,empId,req.params)
-        res.set('X-Total-Count',1)
-        res.status(HttpStatusCode.Ok).json(await data)
+            const logger = settingsConfig.logger;
+            logger.info(`[EMPLOYEE_CONTROLLER] : Inside getEmp`);
+            const { empId } = req.params
+
+            const data = await this.newEmployeeService.getEmployee(settingsConfig, empId, req.params)
+            res.set('X-Total-Count', 1)
+            res.status(HttpStatusCode.Ok).json(await data)
         } catch (error) {
             next(error)
         }
@@ -252,17 +91,17 @@ async createEmployee(settingsConfig,req,res,next){
         try {
             const logger = settingsConfig.logger;
             logger.info(`[EMPLOYEE_CONTROLLER] : Inside updateEmployee`);
-            
-            const {empId} = req.params
-            
-            const emp = await this.newEmployeeService.getEmployee(settingsConfig, empId,req.query)
-            if(emp.length == 0){
+
+            const { empId } = req.params
+
+            const emp = await this.newEmployeeService.getEmployee(settingsConfig, empId, req.query)
+            if (emp.length == 0) {
                 throw new Error("Emp Not Found!")
             }
 
-            const [empToBeUpdated] = await this.newEmployeeService.updateEmployee(settingsConfig,empId, req.body)
-           
-            if(empToBeUpdated==0){
+            const [empToBeUpdated] = await this.newEmployeeService.updateEmployee(settingsConfig, empId, req.body)
+
+            if (empToBeUpdated == 0) {
                 throw new Error("Could Not Update user")
             }
             res.status(HttpStatusCode.Ok).json("employee updated sucessfully")
@@ -271,6 +110,6 @@ async createEmployee(settingsConfig,req,res,next){
             next(error)
         }
     }
-  
+
 }
-module.exports=new EmployeeController()
+module.exports = new EmployeeController()
