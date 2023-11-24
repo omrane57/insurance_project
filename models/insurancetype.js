@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'insuranceType',
+    modelName: 'insurancetype',
     underscored: true,
     paranoid:true
   });

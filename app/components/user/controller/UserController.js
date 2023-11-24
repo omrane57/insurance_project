@@ -22,7 +22,7 @@ class UserController {
             if (typeof username != "string" || typeof role != "string" || typeof password != "string") {
                 throw new Error("Invalid input")
             }
-            if (role == "employee") {
+            if (role == "Employee") {
                 const emp = await this.newemployeeService.getEmpByUsername(settingsConfig, username)
                 if (emp.length == 0) {
                     throw new Error("invalid username")

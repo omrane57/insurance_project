@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     policyId:DataTypes.UUID
   }, {
     sequelize,
-    modelName: 'paymentDetail',
+    modelName: 'paymentdetail',
     underscored: true,
     paranoid:true
   });

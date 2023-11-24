@@ -170,6 +170,144 @@
       "controller": "../components/tax/controller/TaxController",
       "secured": false,
       "action":"deleteTax"
+    },{
+      "route": "/api/v1/login",
+      "method": "POST",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false
+    },
+      {
+      "route": "/api/v1/insurancetype",
+      "method": "GET",
+      "controller": "../components/insurancetype/controller/InsuranceTypeController",
+      "secured":false,
+      "action": "getAllInsuranceType"
+    },
+    {
+      "route": "/api/v1/insurancetype",
+      "method": "POST",
+      "controller": "../components/insurancetype/controller/InsuranceTypeController",
+      "secured":false,
+      "action": "createInsuranceType"
+    },
+     {
+      "route": "/api/v1/insurancetype/:insuranceTypeId",
+      "method": "DELETE",
+      "controller": "../components/insurancetype/controller/InsuranceTypeController",
+      "secured":false,
+      "action": "deleteInsuranceType"
+    },
+      {
+      "route": "/api/v1/insurancetype/:insuranceTypeId",
+      "method": "PUT",
+      "controller": "../components/insurancetype/controller/InsuranceTypeController",
+      "secured":false,
+      "action": "updateInsuranceType"
+    },
+     {
+      "route": "/api/v1/plan/:insuranceTypeId",
+      "method": "GET",
+      "controller": "../components/plan/controller/PlanController.js",
+      "secured":false,
+      "action": "getAllPlans"
+    },
+     {
+      "route": "/api/v1/plan/:insuranceTypeId",
+      "method": "POST",
+      "controller": "../components/plan/controller/PlanController.js",
+      "secured":false,
+      "action": "createPlan"
+    },
+     {
+      "route": "/api/v1/plan/:insuranceTypeId/:planId",
+      "method": "GET",
+      "controller": "../components/plan/controller/PlanController.js",
+      "secured":false,
+      "action": "getPlanById"
+    },
+      {
+      "route": "/api/v1/plan/:insuranceTypeId/:planId",
+      "method": "DELETE",
+      "controller": "../components/plan/controller/PlanController.js",
+      "secured":false,
+      "action": "deletePlan"
+    },
+      {
+      "route": "/api/v1/plan/:insuranceTypeId/:planId",
+      "method": "PUT",
+      "controller": "../components/plan/controller/PlanController.js",
+      "secured":false,
+      "action": "updatePlan"
+    },
+    {
+      "route": "/api/v1/feedback",
+      "method": "GET",
+      "controller": "../components/feedback/controller/feedbackController.js",
+      "secured":false,
+      "action": "getAllFeedback"
+    },
+    {
+      "route": "/api/v1/feedback",
+      "method": "POST",
+      "controller": "../components/feedback/controller/feedbackController.js",
+      "secured":false,
+      "action": "createFeedback"
+    },
+     {
+      "route": "/api/v1/paymentdetails",
+      "method": "GET",
+      "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
+      "secured":false,
+      "action": "getAllPaymentDetails"
+    },
+     {
+      "route": "/api/v1/paymentdetails/:paymentDetailId",
+      "method": "GET",
+      "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
+      "secured":false,
+      "action": "getPaymentDetailById"
+    },
+     {
+      "route": "/api/v1/paymentdetails/:agentId/:policyId",
+      "method": "POST",
+      "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
+      "secured":false,
+      "action": "createPaymentDetail"
+    },
+    {
+      "route": "/api/v1/policy",
+      "method": "POST",
+      "controller": "../components/policy/controller/PolicyController.js",
+      "secured": false,
+      "action":"createPolicy"
+    },
+    {
+      "route": "/api/v1/policy",
+      "method": "GET",
+      "controller": "../components/policy/controller/PolicyController.js",
+      "secured": false,
+      "action":"getAllPolicy"
+    },
+    {
+      "route": "/api/v1/policy/:policyId",
+      "method": "GET",
+      "controller": "../components/policy/controller/PolicyController.js",
+      "secured": false,
+      "action":"getPolicyById"
+    },
+    {
+      "route": "/api/v1/policy/:policyId",
+      "method": "PUT",
+      "controller": "../components/policy/controller/PolicyController.js",
+      "secured": false,
+      "action":"updatePolicy"
+    },
+    {
+      "route": "/api/v1/policy/:policyId",
+      "method": "DELETE",
+      "controller": "../components/policy/controller/PolicyController.js",
+      "secured": false,
+      "action":"deletePolicy"
     }
 
   ]

@@ -63,19 +63,21 @@ class EmployeeService {
   async getEmpByUsername(settingsConfig, username) {
     const t = await startTransaction();
     try {
+      
       const logger = settingsConfig.logger;
       logger.info(`[EmployeeService] : Inside getEmpByUsername`);
+      const usernames='Emp'+username
       const data = await employeeConfig.model.findAll({
-        where: { username: username },
+        where: { username:usernames },
         paranoid: false,
         transaction: t,
       });
-      if(data.length==0){
-        throw new Error("username doesenot exist")
-      }
+   
       await t.commit();
+      
       return data;
     } catch (error) {
+      
       await t.rollback();
       throw error;
     }

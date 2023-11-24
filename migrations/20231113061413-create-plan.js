@@ -51,7 +51,7 @@ module.exports = {
         onUpdate:'CASCADE',
         references:{
           model:{
-            tableName:"insuranceTypes"
+            tableName:"insurancetypes"
           }
         },key:"id"
 

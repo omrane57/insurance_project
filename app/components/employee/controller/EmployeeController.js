@@ -17,8 +17,10 @@ class EmployeeController {
             if (typeof employeeName != "string" || typeof role != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
                 throw new Error("invalid input")
             }
+            console.log(req.body);
             const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, username)
-            if (user.length != 0) {
+            if (user.length!=0) {
+               
                 throw new Error("username Already Taken")
             }
             const data = await this.newEmployeeService.createEmployee(settingsConfig, req.body)
@@ -36,6 +38,7 @@ class EmployeeController {
                 throw new Error("invalid input")
             }
             const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, username)
+            
             if (user.length != 0) {
                 throw new Error("username Already Taken")
             }

@@ -45,14 +45,14 @@ class EmployeeConfig{
               },
             };
           },    
-          username: (username) => {
-            return {
+          // username: (username) => {
+          //   return {
              
-              [this.fieldMapping.username]: {
-                [Op.like]: `%${username}%`,
-              },
-            };
-          },
+          //     [this.fieldMapping.username]: {
+          //       [Op.like]: `%${username}%`,
+          //     },
+          //   };
+          // },
           password: (password) => {
             return {
               [this.fieldMapping.password]: {
