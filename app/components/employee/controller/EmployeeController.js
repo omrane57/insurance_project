@@ -13,18 +13,29 @@ class EmployeeController {
         try {
             const logger = settingsConfig.logger;
             logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
-            const { employeeName, role, username, password, email } = req.body
-            if (typeof employeeName != "string" || typeof role != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
+            let newBody=JSON.parse(req.body.data)
+            if(!req.files){
+                throw new Error("Please,Upload The Photo")
+              }
+            const { employeeName, username, password, email } = newBody
+            const requiredFields = ["employeeName", "username", "password", "email"];
+        for (const field of requiredFields) {
+            if (newBody[field] === null || newBody[field] === undefined) {
+             throw new Error("Please enter all fields");
+             
+        }}
+            if (typeof employeeName != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
                 throw new Error("invalid input")
             }
-            console.log(req.body);
-            const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, username)
-            if (user.length!=0) {
-               
+            const newUsername="EMP"+username
+            const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, newUsername)
+            
+            if (user.length != 0) {
                 throw new Error("username Already Taken")
             }
-            const data = await this.newEmployeeService.createEmployee(settingsConfig, req.body)
-            res.status(HttpStatusCode.Ok).json(await data)
+            newBody.role="Employee"
+            const data = await this.newEmployeeService.createEmployee(settingsConfig,newBody,req.files)
+            res.status(HttpStatusCode.Ok).json(data)
         } catch (error) {
             next(error)
         }

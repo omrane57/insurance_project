@@ -5,10 +5,40 @@ const { parseLimitAndOffset, unmarshalBody, parseSelectFields, parseFilterQuerie
 const { tokencreation } = require("../../../middleware/authService");
 const { preloadAssociations } = require('../../../sequelize/association');
 const { v4 } = require("uuid");
+const fs = require('fs/promises');
+
+const uploadImage = async (file) => {
+
+
+  try {
+      // Check if image file is included
+      if (file) {
+        let dynamicDirectory;
+        dynamicDirectory = 'D:/insurance_final_project/uploadimages/employee/employeephoto';
+        
+        await fs.mkdir(dynamicDirectory, { recursive: true });
+        const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
+        await fs.writeFile(finalFileLocation, file.image.data);
+        if (file.image.mimetype != 'image/jpeg') {
+        throw  new Error('Invalid file type. Only JPEG files are allowed.');
+
+      } 
+          // Access the file location and name
+          const fileLocation = finalFileLocation; // File path
+          const fileName = file.image.name; // File name
+
+          return { "fileLocation": fileLocation, "fileName": fileName };
+      } else {
+          return { error: 'Image file is required.' };
+      }
+  } catch (error) {
+      throw error;
+  }
+};
 class EmployeeService {
   constructor() {
   }
-  async createEmployee(settingsConfig, body) {
+  async createEmployee(settingsConfig, body,file) {
     const t = await startTransaction();
     try {
       const logger = settingsConfig.logger;
@@ -18,7 +48,8 @@ class EmployeeService {
       body.username = "Emp" + body.username
       body.password = hashpassword;
       body.status = true;
-
+      const fileResult = await uploadImage(file);
+      body.employeeImgUrl=fileResult.fileLocation
       const data = await employeeConfig.model.create(body, { transaction: t });
       await t.commit();
       return data;
@@ -61,6 +92,7 @@ class EmployeeService {
   
 
   async getEmpByUsername(settingsConfig, username) {
+    // return username
     const t = await startTransaction();
     try {
       
@@ -80,8 +112,8 @@ class EmployeeService {
       
       await t.rollback();
       throw error;
-    }
-  }
+}
+}
 
   async deleteEmployee(settingsConfig, empId, queryParams) {
     const t = await startTransaction()

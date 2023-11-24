@@ -14,7 +14,13 @@ class TaxController {
             const logger = settingsConfig.logger;
             logger.info(`[TAX_CONTROLLER] : Inside createTax`);
             const {taxPercentage } = req.body;
+            const requiredFields = [ "taxPercentage"
+        ];
+       for (const field of requiredFields) {
+           if (req.body[field] === null || req.body[field] === undefined) {
+            throw new Error("Please enter all fields");
             
+       }}
             const state = await this.newTaxService.createTax(settingsConfig, req.body);
             return res.status(200).json(state);
         } catch (error) {

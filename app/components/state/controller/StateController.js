@@ -14,6 +14,13 @@ class StateController {
             const logger = settingsConfig.logger;
             logger.info(`[STATE_CONTROLLER] : Inside createState`);
             const { stateName } = req.body;
+            const requiredFields = [ "stateName"
+        ];
+       for (const field of requiredFields) {
+           if (req.body[field] === null || req.body[field] === undefined) {
+            throw new Error("Please enter all fields");
+            
+       }}
             if (typeof stateName != "string") {
                 throw new Error("Invalid stateName")
             }

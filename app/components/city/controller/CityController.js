@@ -12,7 +12,13 @@ class CityController {
             logger.info(`[CITY_CONTROLLER] : Inside createCity`);
             const{stateId}=req.params;
             const { cityName } = req.body;
-        
+            const requiredFields = [ "cityName"
+           ];
+          for (const field of requiredFields) {
+              if (req.body[field] === null || req.body[field] === undefined) {
+               throw new Error("Please enter all fields");
+               
+          }}
             if (typeof cityName != "string") {
                 throw new Error("Invalid cityName")
             }

@@ -8,16 +8,27 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      type: {
+      role: {
         allowNull: false,
 
         type: Sequelize.STRING
       },
-      created_date: {
+      date:{
         allowNull: false,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
+      time:{
+        allowNull: false,
+
+        type: Sequelize.STRING
+      },
+      username:{
+        allowNull: false,
+
+        type: Sequelize.STRING
+      },
+    
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

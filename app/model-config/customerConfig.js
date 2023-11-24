@@ -25,9 +25,9 @@ class CustomerConfig {
     //   this.association=Object.freeze({
     //     accountFilter:'accountFilter',
     // })
-    this.model = db.customerDetail;
-    this.modelName = db.customerDetail.name;
-    this.tableName = db.customerDetail.tableName;
+    this.model = db.customerdetail;
+    this.modelName = db.customerdetail.name;
+    this.tableName = db.customerdetail.tableName;
     this.filter = Object.freeze({
       id: (id) => {
         validateUuid(id);
@@ -68,35 +68,35 @@ class CustomerConfig {
       role: (role) => {
         return {
           [this.fieldMapping.role]: {
-            [Op.eq]: role,
+            [Op.like]: `${role}`,
           },
         };
       },
       dob: (dob) => {
         return {
           [this.fieldMapping.dob]: {
-            [Op.like]: dob,
+            [Op.like]: `${dob}`,
           },
         };
       },
       state: (state) => {
         return {
           [this.fieldMapping.state]: {
-            [Op.like]: state,
+            [Op.like]: `${state}`,
           },
         };
       },
       city: (city) => {
         return {
           [this.fieldMapping.city]: {
-            [Op.like]: city,
+            [Op.like]: `${city}`,
           },
         };
       },
       pincode: (pincode) => {
         return {
           [this.fieldMapping.pincode]: {
-            [Op.like]: pincode,
+            [Op.like]: `${pincode}`,
           },
         };
       },
@@ -104,21 +104,28 @@ class CustomerConfig {
         validateStringLength(mobileno, "Phone Number", 10, 10);
         return {
           [this.fieldMapping.mobileno]: {
-            [Op.like]: mobileno,
+            [Op.like]: `${mobileno}`,
           },
         };
       },
       nominee: (nominee) => {
         return {
           [this.fieldMapping.nominee]: {
-            [Op.like]: nominee,
+            [Op.like]: `${nominee}`,
           },
         };
       },
       nomineeRelation: (nomineeRelation) => {
         return {
           [this.fieldMapping.nomineeRelation]: {
-            [Op.like]: nomineeRelation,
+            [Op.like]: `${nomineeRelation}`,
+          },
+        };
+      },
+      age: (age) => {
+        return {
+          [this.fieldMapping.age]: {
+            [Op.eq]: age,
           },
         };
       },

@@ -26,7 +26,7 @@ module.exports = {
       },
       date: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       agent_id:{
         allowNull:false,

@@ -8,6 +8,13 @@
       "secured": false,
       "action":"login"
     },
+    {
+      "route": "/api/v1/login",
+      "method": "GET",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"getAllLogins"
+    },
 
     {
       "route": "/api/v1/logout",
@@ -170,7 +177,114 @@
       "controller": "../components/tax/controller/TaxController",
       "secured": false,
       "action":"deleteTax"
-    },{
+    },
+      {
+      "route": "/api/v1/customer",
+      "method": "POST",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"createCustomer"
+    },
+    {
+      "route": "/api/v1/customer",
+      "method": "GET",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"getAllCustomer"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "GET",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"getCustomerById"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "DELETE",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"deleteCustomer"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "PUT",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"updateCustomer"
+    },
+    {
+      "route": "/api/v1/agent/:employeeId",
+      "method": "POST",
+      "controller": "../components/agent/controller/AgentController",
+      "secured": false,
+      "action":"createAgent"
+    },
+    {
+      "route": "/api/v1/agent",
+      "method": "GET",
+      "controller": "../components/agent/controller/AgentController",
+      "secured": false,
+      "action":"getAllAgent"
+    },
+    
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "GET",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"getAgentById"
+      },
+    
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "DELETE",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"deleteAgent"
+      },
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "PUT",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"updateAgent"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentId",
+        "method": "POST",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"createAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail",
+        "method": "GET",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"getAllAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailById",
+        "method": "GET",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"getAgentCustomerDetailById"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailId",
+        "method": "DELETE",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"deleteAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailById",
+        "method": "PUT",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"updateAgentCustomerDetail"
+      },{
       "route": "/api/v1/login",
       "method": "POST",
       "controller": "../components/employee/controller/EmployeeController",
@@ -309,7 +423,7 @@
       "secured": false,
       "action":"deletePolicy"
     }
-
+     
   ]
 }
 

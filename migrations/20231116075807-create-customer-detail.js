@@ -16,7 +16,12 @@ module.exports = {
       dob: {
         allowNull: false,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
+      },
+      age: {
+        allowNull: false,
+
+        type: Sequelize.INTEGER
       },
       address: {
         allowNull: false,
@@ -64,13 +69,17 @@ module.exports = {
       },
       username: {
         allowNull: false,
-
+        unique:true,
         type: Sequelize.STRING
       },
       password: {
         allowNull: false,
 
         type: Sequelize.STRING
+      },
+      customer_img_url:{
+        type: Sequelize.STRING,
+        allowNull:false
       },
       agent_id: {
         allowNull: true,
