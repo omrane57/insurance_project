@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('agentsCustomerAccountDetails', {
+    await queryInterface.createTable('agentscustomeraccountdetails', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -26,7 +26,7 @@ module.exports = {
       },
       date: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       agent_id:{
         allowNull:false,
@@ -57,6 +57,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('agentsCustomerAccountDetails');
+    await queryInterface.dropTable('agentscustomeraccountdetails');
   }
 };

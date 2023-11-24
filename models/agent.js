@@ -36,13 +36,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   agent.init({
     agentName: DataTypes.STRING,
+    role:DataTypes.STRING,
     password: DataTypes.STRING,
     email: DataTypes.STRING,
     agentAddress: DataTypes.STRING,
     qualification: DataTypes.STRING,
     status: DataTypes.BOOLEAN,
     username: DataTypes.STRING,
-    employeeId:DataTypes.UUID
+    employeeId:DataTypes.UUID,
+    agentImgUrl: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'agent',

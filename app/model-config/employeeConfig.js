@@ -60,10 +60,10 @@ class EmployeeConfig{
               },
             };
           },
-          isAdmin: (isAdmin) => {
+          role: (role) => {
             return {
-              [this.fieldMapping.isAdmin]: {
-                [Op.eq]: isAdmin,
+              [this.fieldMapping.role]: {
+                [Op.like]: `%${role}%`,
               },
             };
           },

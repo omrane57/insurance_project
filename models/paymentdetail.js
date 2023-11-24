@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class paymentDetail extends Model {
+  class paymentdetail extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     //   })
     // }
   }
-  paymentDetail.init({
+  paymentdetail.init({
     installationDate: DataTypes.DATE,
     installationAmount: DataTypes.INTEGER,
     paymentDate: DataTypes.DATE,
@@ -31,9 +31,9 @@ module.exports = (sequelize, DataTypes) => {
     policyId:DataTypes.UUID
   }, {
     sequelize,
-    modelName: 'paymentDetail',
+    modelName: 'paymentdetail',
     underscored: true,
     paranoid:true
   });
-  return paymentDetail;
+  return paymentdetail;
 };

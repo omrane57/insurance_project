@@ -28,11 +28,16 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull:false,
-        unique:true
+       
       },
       status: {
         type: Sequelize.BOOLEAN,
         allowNull:false
+      },
+      employee_img_url:{
+        type: Sequelize.STRING,
+        allowNull:false
+
       },
       created_at: {
         allowNull: false,

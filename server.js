@@ -14,7 +14,8 @@ const { StatusCodes } = require("http-status-codes")
 const SettingsConfig = require('./app/configs/settings/settings-config');
 const settingsConfig = new SettingsConfig();
 const routeConfig = require('./app/configs/route-config');
-
+const cookieParser = require('cookie-parser')
+const fileUpload = require('express-fileupload');
 const {
     initLogger
 } = require('./app/utils/logger');
@@ -38,6 +39,15 @@ function configureApplication(app) {
         },
         exposedHeaders: ['X-Total-Count'],
     };
+    
+
+    app.use(cookieParser())
+    app.use(fileUpload({
+        createParentPath: true,
+        limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
+        useTempFiles: false,
+        // tempFileDir: 'D:/insurance_final_project/uploadimages', // Specify your default file location here
+    }));
     app.use(cors(corsOptions));
 
     app.use((req, res, next) => {
@@ -48,6 +58,7 @@ function configureApplication(app) {
         );
         next();
     });
+   
     app.use(express.json({ limit: '50mb', extended: true })); // support json encoded bodies
     app.use(
         express.urlencoded({
@@ -59,7 +70,8 @@ function configureApplication(app) {
         res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
         res.set('Pragma', 'no-cache');
         res.set('Expires', '0');
-        res.type('application/json');
+        res.type('Auto');
+        
         next();
     });
     app.use((req, res, next) => {

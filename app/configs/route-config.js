@@ -23,13 +23,13 @@ class RouteConfig {
 
   loadController(routeItem) {
     let controller;
-
+   
     if (!routeItem || !routeItem.controller) {
       throw new Error(
         'Undefined "controller" property in "lib/configs/route.config.json"'
       );
     }
-  
+
     try {
       // eslint-disable-next-line import/no-dynamic-require
       controller = require(routeItem.controller);

@@ -18,7 +18,7 @@ module.exports = {
       },
       email: {
         allowNull:false,
-        unique:true,
+       
         type: Sequelize.STRING
       },
       agent_address: {
@@ -42,6 +42,11 @@ module.exports = {
       role:{
         allowNull: false,
         type: Sequelize.STRING
+      },
+      agent_img_url:{
+        type: Sequelize.STRING,
+        allowNull:false
+
       },
       employee_id:{
         allowNull:false,

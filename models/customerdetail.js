@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 const agent = require('./agent');
 module.exports = (sequelize, DataTypes) => {
-  class customerDetail extends Model {
+  class customerdetail extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,21 +12,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     // static associate(models) {
     //   // define association here
-    //   customerDetail.belongsTo(models.agent,{
+    //   customerdetail.belongsTo(models.agent,{
     //     foreignKey:'agent_id',
     //     as:'agent'
     //   })
-    //   customerDetail.hasMany(models.policy,{
+    //   customerdetail.hasMany(models.policy,{
     //     foreignKey: 'customer_id',
     //     as:'policy'
     //   })
-    //   customerDetail.hasMany(models.feedback,{
+    //   customerdetail.hasMany(models.feedback,{
     //     foreignKey: 'customer_id',
     //     as:'feedback'
     //   })
     // }
   }
-  customerDetail.init({
+  customerdetail.init({
     customerName: DataTypes.STRING,
     dob: DataTypes.DATE,
     address: DataTypes.STRING,
@@ -40,12 +40,14 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     agentId:DataTypes.UUID,
-
+    customerImgUrl: DataTypes.STRING,
+    age:DataTypes.INTEGER,
+    role:DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'customerDetail',
+    modelName: 'customerdetail',
     underscored: true,
     paranoid:true
   });
-  return customerDetail;
+  return customerdetail;
 };

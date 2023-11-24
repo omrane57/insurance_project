@@ -1,5 +1,36 @@
 {
   "routes": [
+
+    {
+      "route": "/api/v1/login",
+      "method": "POST",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"login"
+    },
+    {
+      "route": "/api/v1/login",
+      "method": "GET",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"getAllLogins"
+    },
+
+    {
+      "route": "/api/v1/logout",
+      "method": "POST",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"logout"
+    },
+    {
+      "route": "/api/v1/resetpassword",
+      "method": "POST",
+      "controller":"../components/user/controller/UserController",
+      "secured": false,
+      "action":"resetPassword"
+    },
+
     {
       "route": "/api/v1/admin",
       "method": "POST",
@@ -34,7 +65,227 @@
       "controller": "../components/employee/controller/EmployeeController",
       "secured": false,
       "action":"deleteEmployee"
-    }
+    },
+    {
+      "route": "/api/v1/employee/:empId",
+      "method": "PUT",
+      "controller": "../components/employee/controller/EmployeeController",
+      "secured": false,
+      "action":"updateEmployee"
+    },
+    {
+      "route": "/api/v1/state",
+      "method": "POST",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"createState"
+    },
+    {
+      "route": "/api/v1/state",
+      "method": "GET",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"getAllState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "GET",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"getState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "PUT",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"updateState"
+    },
+    {
+      "route": "/api/v1/state/:stateId",
+      "method": "DELETE",
+      "controller": "../components/state/controller/StateController",
+      "secured": false,
+      "action":"deleteState"
+    },
+    {
+      "route": "/api/v1/city/:stateId",
+      "method": "POST",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"createCity"
+    },
+    {
+      "route": "/api/v1/city/:stateId",
+      "method": "GET",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"getAllCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "GET",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"getCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "PUT",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"updateCity"
+    },
+    {
+      "route": "/api/v1/city/:cityId/:stateId",
+      "method": "DELETE",
+      "controller": "../components/city/controller/CityController",
+      "secured": false,
+      "action":"deleteCity"
+    },
+    {
+      "route": "/api/v1/tax",
+      "method": "POST",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"createTax"
+    },
+    {
+      "route": "/api/v1/tax",
+      "method": "GET",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"getAllTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "GET",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"getTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "PUT",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"updateTax"
+    },
+    {
+      "route": "/api/v1/tax/:taxId",
+      "method": "DELETE",
+      "controller": "../components/tax/controller/TaxController",
+      "secured": false,
+      "action":"deleteTax"
+    },
+      {
+      "route": "/api/v1/customer",
+      "method": "POST",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"createCustomer"
+    },
+    {
+      "route": "/api/v1/customer",
+      "method": "GET",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"getAllCustomer"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "GET",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"getCustomerById"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "DELETE",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"deleteCustomer"
+    },
+    {
+      "route": "/api/v1/customer/:custId",
+      "method": "PUT",
+      "controller": "../components/customer/controller/CustomerController",
+      "secured": false,
+      "action":"updateCustomer"
+    },
+    {
+      "route": "/api/v1/agent/:employeeId",
+      "method": "POST",
+      "controller": "../components/agent/controller/AgentController",
+      "secured": false,
+      "action":"createAgent"
+    },
+    {
+      "route": "/api/v1/agent",
+      "method": "GET",
+      "controller": "../components/agent/controller/AgentController",
+      "secured": false,
+      "action":"getAllAgent"
+    },
+    
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "GET",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"getAgentById"
+      },
+    
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "DELETE",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"deleteAgent"
+      },
+      {
+        "route": "/api/v1/agent/:agentId",
+        "method": "PUT",
+        "controller": "../components/agent/controller/AgentController",
+        "secured": false,
+        "action":"updateAgent"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentId",
+        "method": "POST",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"createAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail",
+        "method": "GET",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"getAllAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailById",
+        "method": "GET",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"getAgentCustomerDetailById"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailId",
+        "method": "DELETE",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"deleteAgentCustomerDetail"
+      },
+      {
+        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailById",
+        "method": "PUT",
+        "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
+        "secured": false,
+        "action":"updateAgentCustomerDetail"
+      }
+     
   ]
 }
 
