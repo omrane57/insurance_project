@@ -20,7 +20,7 @@ const uploadImage = async (file) => {
       // Check if image file is included
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'D:/insurance_final_project/uploadimages/agent/agentPhoto';
+        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/agent/agentPhoto';
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
         const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
@@ -68,6 +68,7 @@ class AgentService {
       body.id = v4();
       body.username = "Agent" + body.username;
       body.password = hashpassword;
+      body.role="Agent"
       const fileResult = await uploadImage(file);
       body.agentImgUrl=fileResult.fileLocation
       const data = await agentConfig.model.create(body, { transaction: t });

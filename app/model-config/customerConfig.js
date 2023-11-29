@@ -20,6 +20,7 @@ class CustomerConfig {
       mobileno: "mobileno",
       nominee: "nominee",
       nomineeRelation: "nomineeRelation",
+      address:'address',
       agentId: "agentId",
     });
     //   this.association=Object.freeze({

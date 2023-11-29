@@ -22,6 +22,7 @@ class UserController {
             const { username, password, role } = req.body;
             const requiredFields = [ "username", "password", "role"
         ];
+       
        for (const field of requiredFields) {
            if (req.body[field] === null || req.body[field] === undefined) {
             throw new Error("Please enter all fields");
@@ -32,8 +33,9 @@ class UserController {
             if (typeof username != "string" || typeof role != "string" || typeof password != "string") {
                 throw new Error("Invalid input")
             }
-            if (role == "Employee") {
+            if (role == "Employee"||role=="Admin") {
                 const emp = await this.newemployeeService.getEmpByUsername(settingsConfig, username)
+             
                 if (emp.length == 0) {
                     throw new Error("invalid username")
                 }
@@ -94,7 +96,7 @@ class UserController {
        }}
             const payload = checkJwtHS256(settingsConfig, req, res, next)
      
-            if (payload.role == "employee") {
+            if (payload.role == "Employee") {
 
                 if (payload.username != username) {
 
@@ -108,32 +110,32 @@ class UserController {
                 res.status(HttpStatusCode.Ok).json("password reset sucessfully")
                 return
             }
-            // if (payload.role == "Agent") {
+            if (payload.role == "Agent") {
 
-            //     if (payload.username != username) {
+                if (payload.username != username) {
 
-            //         throw new Error("invalid username")
-            //     }
-            //     const passwordReset = await this.newuserService.resetPasswordForAgent(settingsConfig, payload.username, oldPassword, newPassword)
-            //     if (passwordReset == 0) {
-            //         throw new Error("cannot update password")
-            //     }
-            //     res.status(HttpStatusCode.Ok).json("password reset sucessfully")
-            //     return
-            // }
-            // if (payload.role == "Customer") {
+                    throw new Error("invalid username")
+                }
+                const passwordReset = await this.newuserService.resetPasswordForAgent(settingsConfig, payload.username, oldPassword, newPassword)
+                if (passwordReset == 0) {
+                    throw new Error("cannot update password")
+                }
+                res.status(HttpStatusCode.Ok).json("password reset sucessfully")
+                return
+            }
+            if (payload.role == "Customer") {
 
-            //     if (payload.username != username) {
+                if (payload.username != username) {
 
-            //         throw new Error("invalid username")
-            //     }
-            //     const passwordReset = await this.newuserService.resetPasswordForAgent(settingsConfig, payload.username, oldPassword, newPassword)
-            //     if (passwordReset == 0) {
-            //         throw new Error("cannot update password")
-            //     }
-            //     res.status(HttpStatusCode.Ok).json("password reset sucessfully")
-            //     return
-            // }
+                    throw new Error("invalid username")
+                }
+                const passwordReset = await this.newuserService.resetPasswordForAgent(settingsConfig, payload.username, oldPassword, newPassword)
+                if (passwordReset == 0) {
+                    throw new Error("cannot update password")
+                }
+                res.status(HttpStatusCode.Ok).json("password reset sucessfully")
+                return
+            }
 
         } catch (error) {
             next(error)

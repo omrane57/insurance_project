@@ -14,7 +14,7 @@ const uploadImage = async (file) => {
       // Check if image file is included
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'D:/insurance_final_project/uploadimages/employee/employeephoto';
+        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/employee/employeephoto';
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
         const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
@@ -92,15 +92,15 @@ class EmployeeService {
   
 
   async getEmpByUsername(settingsConfig, username) {
-    // return username
+
     const t = await startTransaction();
     try {
-      
+  
       const logger = settingsConfig.logger;
       logger.info(`[EmployeeService] : Inside getEmpByUsername`);
-      const usernames='Emp'+username
+     
       const data = await employeeConfig.model.findAll({
-        where: { username:usernames },
+        where: { username:username },
         paranoid: false,
         transaction: t,
       });

@@ -43,7 +43,7 @@ class CityService{
         }
     }
 
-    async getAllCity(settingsConfig,queryParams,stateId){
+    async getAllCity(settingsConfig,queryParams){
         const t= await startTransaction() 
         try {
             const selectArray={
@@ -57,7 +57,7 @@ class CityService{
         const logger = settingsConfig.logger;
         logger.info(`[CityService] : Inside getAllCity`);
         const data=await cityConfig.model.findAndCountAll({ transaction: t,
-          ...parseFilterQueries(queryParams, cityConfig.filter,{[cityConfig.fieldMapping.stateId]:stateId}),
+          ...parseFilterQueries(queryParams, cityConfig.filter),
           attributes: attributeToReturn,
             // ...parseFilterQueries(queryParams, cityConfig.filter),
             attributes: attributeToReturn,

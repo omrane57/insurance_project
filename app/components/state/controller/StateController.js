@@ -24,12 +24,17 @@ class StateController {
             if (typeof stateName != "string") {
                 throw new Error("Invalid stateName")
             }
+            const findState=await this.newStateService.getStateByStateName(settingsConfig,stateName)
+         if(findState.length!=0){
+            throw new Error("state already exist")
+         }
             const state = await this.newStateService.createState(settingsConfig, req.body);
             return res.status(200).json(state);
         } catch (error) {
             next(error);
         }
     }
+    
     async deleteState(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;
@@ -55,7 +60,18 @@ class StateController {
             next(error)
         }
     }
-
+    async getStateByStateName(settingsConfig, req, res, next) {
+        try {
+            const logger = settingsConfig.logger;
+            const {stateName}=req.body
+            logger.info(`[state_CONTROLLER] : Inside getStateByStateName`);
+            const { rows, count } = await this.newStateService.getStateByStateName(settingsConfig, stateName)
+            res.set('X-Total-Count', count)
+            res.status(HttpStatusCode.Ok).json(await rows)
+        } catch (error) {
+            next(error)
+        }
+    }
     async getState(settingsConfig, req, res, next) {
         try {
             const logger = settingsConfig.logger;

@@ -5,6 +5,7 @@ const { parseLimitAndOffset, unmarshalBody, parseSelectFields, parseFilterQuerie
 const { tokencreation } = require("../../../middleware/authService");
 const {preloadAssociations}=require('../../../sequelize/association');
 const { v4 } = require("uuid");
+const { where } = require("sequelize");
 class StateService{
     constructor(){
 
@@ -26,6 +27,28 @@ class StateService{
           throw error;
         }
       } 
+
+
+      async getStateByStateName(settingsConfig, stateName) {
+        const t = await startTransaction();
+        try {
+          const logger = settingsConfig.logger;
+          logger.info(`[StateService] : Inside getStateByStateName`);
+        
+          
+          const data = await stateConfig.model.findAll({where:{stateName:stateName}}, { transaction: t });
+          await t.commit();
+          return data;
+        } catch (error) {
+          await t.rollback();
+          throw error;
+        }
+      } 
+
+
+
+
+
     async deleteState(settingsConfig,stateId,queryParams){
         const t= await startTransaction() 
         try {

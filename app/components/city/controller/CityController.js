@@ -51,9 +51,9 @@ class CityController {
             const logger = settingsConfig.logger;
             const queryParams = req.query
             logger.info(`[CITY_CONTROLLER] : Inside getAllCity`);
-            const{stateId}=req.params;
+            
 
-            const { rows, count } = await this.newCityService.getAllCity(settingsConfig, queryParams,stateId)
+            const { rows, count } = await this.newCityService.getAllCity(settingsConfig, queryParams)
             res.set('X-Total-Count', count)
             res.status(HttpStatusCode.Ok).json(await rows)
         } catch (error) {
