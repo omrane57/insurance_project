@@ -11,17 +11,22 @@ module.exports = {
       installation_date: {
         allowNull: false,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
+    installation_no: {
+      allowNull: false,
+
+      type: Sequelize.INTEGER
+    },
       installation_amount: {
         allowNull: false,
 
-        type: Sequelize.INTEGER
+        type: Sequelize.DOUBLE
       },
       payment_date: {
-        allowNull: false,
+        allowNull: true,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       payment_status: {
         allowNull: false,

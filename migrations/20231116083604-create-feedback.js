@@ -26,7 +26,7 @@ module.exports = {
       contact_date: {
         allowNull: false,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       reply: {
         type: Sequelize.STRING

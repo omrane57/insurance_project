@@ -18,10 +18,10 @@ module.exports = {
 
         type: Sequelize.STRING
       },
-      date_created: {
+      date: {
         allowNull: false,
 
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       maturity_date: {
         allowNull: false,
@@ -36,12 +36,12 @@ module.exports = {
       total_premimum_amount: {
         allowNull: false,
 
-        type: Sequelize.INTEGER
+        type: Sequelize.DOUBLE
       },
       profit_ratio: {
         allowNull: false,
 
-        type: Sequelize.INTEGER
+        type: Sequelize.DOUBLE
       },
       sum_assured: {
         allowNull: false,
@@ -53,18 +53,7 @@ module.exports = {
 
         type: Sequelize.BOOLEAN
       },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }, 
-      deleted_at: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
+    
       customer_id: {
         allowNull: false,
         type: Sequelize.UUID,
@@ -89,7 +78,6 @@ module.exports = {
           }
         },key:"id"
 
-
       },
       plan_id: {
         allowNull: false,
@@ -102,7 +90,18 @@ module.exports = {
           }
         },key:"id"
 
-
+      },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }, 
+      deleted_at: {
+        allowNull: true,
+        type: Sequelize.DATE
       }
     });
   },

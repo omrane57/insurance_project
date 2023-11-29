@@ -10,10 +10,14 @@ class CustomerController {
     this.newCustomerService = customerService;
   }
   async createCustomer(settingsConfig, req, res, next) {
+  return
     try {
       const logger = settingsConfig.logger;
       logger.info(`[Customer_CONTROLLER] : Inside createCustomer`);
       let newBody=JSON.parse(req.body.data)
+     console.log(newBody)
+     console.log(req.files)
+return
       if(!req.files){
         throw new Error("Please,Upload The Photo")
       }

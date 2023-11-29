@@ -13,25 +13,32 @@ const { v4 } = require("uuid");
 const customerConfig = require("../../../model-config/customerConfig");
 const agentConfig = require("../../../model-config/agentConfig");
 const fs = require('fs/promises');
+function generateUniqueFileName(originalFileName) {
+
+  const timestamp = Date.now();
+  const uniqueIdentifier = Math.random().toString(36).substring(7);
+  const fileExtension = originalFileName.split('.').pop(); // Get the file extension
+  return `${timestamp}-${uniqueIdentifier}.${fileExtension}`;
+}
 const uploadImage = async (file) => {
 
 
   try {
-      // Check if image file is included
+     
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'D:/insurance_final_project/uploadimages/agent/agentPhoto';
+        dynamicDirectory = 'D:/insurance_final_project/uploadimages/plan/planphoto';
+        const uniqueFileName = generateUniqueFileName(file.image.name);
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
-        const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
+        const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
         await fs.writeFile(finalFileLocation, file.image.data);
         if (file.image.mimetype != 'image/jpeg') {
         throw  new Error('Invalid file type. Only JPEG files are allowed.');
 
       } 
-          // Access the file location and name
-          const fileLocation = finalFileLocation; // File path
-          const fileName = file.image.name; // File name
+          const fileLocation = finalFileLocation; 
+          const fileName = uniqueFileName; 
 
           return { "fileLocation": fileLocation, "fileName": fileName };
       } else {
@@ -39,7 +46,8 @@ const uploadImage = async (file) => {
       }
   } catch (error) {
       throw error;
-  }}
+  }
+};
 class AgentService {
   // #associatiomMap = {
   //     account: {

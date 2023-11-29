@@ -41,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     agentId:DataTypes.UUID,
     customerImgUrl: DataTypes.STRING,
+    customerAddharUrl: DataTypes.STRING,
+    customerPanUrl:DataTypes.STRING,
+    status:DataTypes.BOOLEAN,
     age:DataTypes.INTEGER,
     role:DataTypes.STRING,
   }, {

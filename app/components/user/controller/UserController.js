@@ -32,7 +32,7 @@ class UserController {
             if (typeof username != "string" || typeof role != "string" || typeof password != "string") {
                 throw new Error("Invalid input")
             }
-            if (role == "Employee") {
+            if (role == "Employee"||role=="Admin") {
                 const emp = await this.newemployeeService.getEmpByUsername(settingsConfig, username)
                 if (emp.length == 0) {
                     throw new Error("invalid username")
@@ -43,6 +43,7 @@ class UserController {
                 return res.status(200).json(employee);
             }
             if (role == "Customer") {
+
                 const emp = await this.newcustomerService.getCustomerByUsername(settingsConfig, username)
                 if (emp.length == 0) {
                     throw new Error("invalid username")

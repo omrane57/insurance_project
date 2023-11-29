@@ -34,18 +34,17 @@ class PaymentDetailService {
     }
   }
 
-  async createPaymentDetail(settingsConfig, agentId, policyId, body) {
+  async createPaymentDetail(settingsConfig,policyId, body) {
     const t = await startTransaction();
     try {
       const logger = settingsConfig.logger;
       logger.info(`[PaymentDetailService] : Inside createPaymentDetail`);
 
       body.id = v4();
-      body.paymentStatus = true;
-      (body.installationDate = new Date()), (body.paymentDate = new Date()); //change later
+    
       // body.agentId = agentId,
-      //     body.policyId = policyId
-      console.log(body);
+          body.policyId = policyId
+      
       const data = await paymentDetailConfig.model.create(body, {
         transaction: t,
       });

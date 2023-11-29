@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     profitRatio: DataTypes.INTEGER,
     commissionAmount: DataTypes.INTEGER,
     status: DataTypes.BOOLEAN,
-    insuranceTypeId:DataTypes.UUID
+    insuranceTypeId:DataTypes.UUID,
+    planImg:DataTypes.STRING,
+    planName:DataTypes.STRING,
+    insuranceType:DataTypes.STRING,
+    
   }, {
     sequelize,
     modelName: 'plan',

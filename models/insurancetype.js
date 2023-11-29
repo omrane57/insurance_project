@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   insurancetype.init({
     insuranceName: DataTypes.STRING,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    insuranceImg:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'insurancetype',

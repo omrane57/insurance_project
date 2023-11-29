@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   policy.init({
     insuranceType: DataTypes.STRING,
     planName: DataTypes.STRING,
-    dateCreated: DataTypes.DATE,
+    date: DataTypes.STRING,
     maturityDate: DataTypes.STRING,
     primimumType: DataTypes.STRING,
     totalPremimumAmount: DataTypes.INTEGER,
@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     sumAssured: DataTypes.STRING,
     customerId:DataTypes.UUID,
     agentId:DataTypes.UUID,
-    planId:DataTypes.UUID
+    planId:DataTypes.UUID,
+    requestStatus:DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'policy',

@@ -363,9 +363,16 @@
     {
       "route": "/api/v1/feedback",
       "method": "POST",
-      "controller": "../components/feedback/controller/feedbackController.js",
+      "controller": "../components/feedback/controller/FeedbackController.js",
       "secured":false,
       "action": "createFeedback"
+    },
+    {
+      "route": "/api/v1/feedback/:feedbackId",
+      "method": "PUT",
+      "controller": "../components/feedback/controller/FeedbackController.js",
+      "secured":false,
+      "action": "updateFeedBack"
     },
      {
       "route": "/api/v1/paymentdetails",
@@ -382,14 +389,14 @@
       "action": "getPaymentDetailById"
     },
      {
-      "route": "/api/v1/paymentdetails/:agentId/:policyId",
+      "route": "/api/v1/paymentdetails/:policyId",
       "method": "POST",
       "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
       "secured":false,
       "action": "createPaymentDetail"
     },
     {
-      "route": "/api/v1/policy",
+      "route": "/api/v1/policy/:planId",
       "method": "POST",
       "controller": "../components/policy/controller/PolicyController.js",
       "secured": false,
@@ -423,6 +430,7 @@
       "secured": false,
       "action":"deletePolicy"
     }
+  
      
   ]
 }

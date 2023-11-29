@@ -28,7 +28,6 @@ class PolicyService {
     try {
       const logger = settingsConfig.logger;
       logger.info(`[PolicyService] : Inside createPolicy`);
-      body.id = v4();
       body.dateCreated = new Date();
       const data = await policyConfig.model.create(body, { transaction: t });
       await t.commit();

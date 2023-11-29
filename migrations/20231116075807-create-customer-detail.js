@@ -81,6 +81,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false
       },
+      customer_addhar_url:{
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      customer_pan_url:{
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      status:{
+        type: Sequelize.BOOLEAN,
+        allowNull:false
+      },
       agent_id: {
         allowNull: true,
         type: Sequelize.UUID,
