@@ -7,34 +7,96 @@ const {preloadAssociations}=require('../../../sequelize/association');
 const { v4 } = require("uuid");
 const customerConfig = require("../../../model-config/customerConfig");
 const fs = require('fs/promises');
+function generateUniqueFileName(originalFileName) {
 
-const uploadImage = async (file) => {
+  const timestamp = Date.now();
+  const uniqueIdentifier = Math.random().toString(36).substring(7);
+  const fileExtension = originalFileName.split('.').pop(); // Get the file extension
+  return `${timestamp}-${uniqueIdentifier}.${fileExtension}`;}
+const uploadPanCard = async (file) => {
 
 
   try {
       // Check if image file is included
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerphoto';
+        dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+        const uniqueFileName = generateUniqueFileName(file.name);
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
-        const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
-        await fs.writeFile(finalFileLocation, file.image.data);
-        if (file.image.mimetype != 'image/jpeg') {
-        throw  new Error('Invalid file type. Only JPEG files are allowed.');
+        const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
+        await fs.writeFile(finalFileLocation, file.data);
+        if (file.mimetype != 'application/pdf') {
+        throw  new Error('Invalid file type. Only PDF files are allowed.');
 
       } 
           // Access the file location and name
           const fileLocation = finalFileLocation; // File path
-          const fileName = file.image.name; // File name
+          const fileName = uniqueFileName; // File name
 
           return { "fileLocation": fileLocation, "fileName": fileName };
       } else {
-          return { error: 'Image file is required.' };
+          return { error: 'PDF file is required.' };
       }
   } catch (error) {
       throw error;
-  }
+  }}
+const uploadAddharCard = async (file) => {
+
+
+  try {
+    // Check if image file is included
+    if (file) {
+      let dynamicDirectory;
+      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+      const uniqueFileName = generateUniqueFileName(file.name);
+      
+      await fs.mkdir(dynamicDirectory, { recursive: true });
+      const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
+      await fs.writeFile(finalFileLocation, file.data);
+      if (file.mimetype != 'application/pdf') {
+      throw  new Error('Invalid file type. Only PDF files are allowed.');
+
+    } 
+        // Access the file location and name
+        const fileLocation = finalFileLocation; // File path
+        const fileName = uniqueFileName; // File name
+
+        return { "fileLocation": fileLocation, "fileName": fileName };
+    } else {
+        return { error: 'PDF file is required.' };
+    }
+} catch (error) {
+    throw error;
+}}
+const uploadImage = async (file) => {
+
+
+  try {
+    // Check if image file is included
+    if (file) {
+      let dynamicDirectory;
+      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+      const uniqueFileName = generateUniqueFileName(file.name);
+      
+      await fs.mkdir(dynamicDirectory, { recursive: true });
+      const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
+      await fs.writeFile(finalFileLocation, file.data);
+      if (file.mimetype != 'image/jpeg') {
+      throw  new Error('Invalid file type. Only PDF files are allowed.');
+
+    } 
+        // Access the file location and name
+        const fileLocation = finalFileLocation; // File path
+        const fileName = uniqueFileName; // File name
+
+        return { "fileLocation": fileLocation, "fileName": fileName };
+    } else {
+        return { error: 'PDF file is required.' };
+    }
+} catch (error) {
+    throw error;
+}
 };
 class CustomerService{
     // #associatiomMap = {
@@ -55,8 +117,14 @@ async createCustomer(settingsConfig, body,file) {
     body.id = v4();
     body.username="Cust"+body.username
     body.password = hashpassword;
-    const fileResult = await uploadImage(file);
     
+
+    const fileResult = await uploadImage(file.image);
+    const fileResultForAddharCard = await uploadAddharCard(file.addharcard);
+    const fileResultForPanCard = await uploadPanCard(file.pancard);
+    body.customerAddharUrl=fileResultForAddharCard.fileLocation
+    body.customerPanUrl=fileResultForPanCard.fileLocation
+    body.status=false
     body.customerImgUrl =fileResult.fileLocation
     const data = await customerConfig.model.create(body, { transaction: t });
     await t.commit();

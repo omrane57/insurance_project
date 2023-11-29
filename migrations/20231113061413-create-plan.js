@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
+      plan_name: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       policy_term_min: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -34,7 +38,7 @@ module.exports = {
       },
       profit_ratio: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.DOUBLE,
       },
       commission_amount: {
         allowNull: false,
@@ -43,6 +47,14 @@ module.exports = {
       status: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
+      },
+      plan_img:{
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      insurance_type:{
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       insurance_type_id: {
         allowNull: false,

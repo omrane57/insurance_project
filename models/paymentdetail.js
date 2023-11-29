@@ -22,9 +22,11 @@ module.exports = (sequelize, DataTypes) => {
     // }
   }
   paymentdetail.init({
-    installationDate: DataTypes.DATE,
-    installationAmount: DataTypes.INTEGER,
-    paymentDate: DataTypes.DATE,
+    installationDate: DataTypes.STRING,
+    installationNo: DataTypes.INTEGER,
+    
+    installationAmount: DataTypes.DOUBLE,
+    paymentDate: DataTypes.STRING,
     paymentStatus: DataTypes.BOOLEAN,
     paymentMethod: DataTypes.STRING,
     agentId:DataTypes.UUID,

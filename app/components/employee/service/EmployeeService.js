@@ -7,25 +7,32 @@ const { preloadAssociations } = require('../../../sequelize/association');
 const { v4 } = require("uuid");
 const fs = require('fs/promises');
 
+function generateUniqueFileName(originalFileName) {
+
+  const timestamp = Date.now();
+  const uniqueIdentifier = Math.random().toString(36).substring(7);
+  const fileExtension = originalFileName.split('.').pop(); // Get the file extension
+  return `${timestamp}-${uniqueIdentifier}.${fileExtension}`;
+}
 const uploadImage = async (file) => {
 
 
   try {
-      // Check if image file is included
+     
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/employee/employeephoto';
+        dynamicDirectory = 'D:/insurance_final_project/uploadimages/plan/planphoto';
+        const uniqueFileName = generateUniqueFileName(file.image.name);
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
-        const finalFileLocation = `${dynamicDirectory}/${file.image.name}`;
+        const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
         await fs.writeFile(finalFileLocation, file.image.data);
         if (file.image.mimetype != 'image/jpeg') {
         throw  new Error('Invalid file type. Only JPEG files are allowed.');
 
       } 
-          // Access the file location and name
-          const fileLocation = finalFileLocation; // File path
-          const fileName = file.image.name; // File name
+          const fileLocation = finalFileLocation; 
+          const fileName = uniqueFileName; 
 
           return { "fileLocation": fileLocation, "fileName": fileName };
       } else {
@@ -98,7 +105,7 @@ class EmployeeService {
   
       const logger = settingsConfig.logger;
       logger.info(`[EmployeeService] : Inside getEmpByUsername`);
-     
+      const usernames='Emp'+username
       const data = await employeeConfig.model.findAll({
         where: { username:username },
         paranoid: false,

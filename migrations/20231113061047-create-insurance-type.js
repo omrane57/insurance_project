@@ -18,6 +18,11 @@ module.exports = {
 
         type: Sequelize.BOOLEAN
       },
+      insurance_img:{
+        allowNull: false,
+
+        type: Sequelize.STRING
+      },
       created_at: {
         allowNull: false,
 

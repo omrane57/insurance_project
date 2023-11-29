@@ -25,37 +25,33 @@ class InsuranceTypeController {
 
     //Create InsuranceType
     async createInsuranceType(settingsConfig, req, res, next) {
+        console.log("122342444444444444567890-")
         try {
             const logger = settingsConfig.logger;
             logger.info("[InsuranceType_CONTROLLER] : Inside createInsuranceType");
 
             // Validate request body
-            const requestBody = req.body;
-            if (!requestBody || typeof requestBody !== "object") {
-                const error = new Error("Invalid request body");
-                error.statusCode = HttpStatusCode.BadRequest;
-                throw error;
-            }
+            let newBody = JSON.parse(req.body.data);
+            const {insuranceName}=newBody
+            const requiredFields = ["insuranceName"];
+            for (const field of requiredFields) {
+                if (newBody[field] === null || newBody[field] === undefined) {
+                 throw new Error("Please enter all fields");
+                 
+            }}
+                if (typeof insuranceName != "string") {
+                    throw new Error("invalid input")
+                }
 
+          
 
-            if (!requestBody.insuranceName || typeof requestBody.insuranceName !== "string") {
-                const error = new Error("Invalid insuranceName");
-                error.statusCode = HttpStatusCode.BadRequest;
-                throw error;
-            }
-
-            if (/\d/.test(requestBody.insuranceName)) {
-                const error = new Error("Insurance name cannot contain numbers");
-                error.statusCode = HttpStatusCode.BadRequest;
-                throw error;
-            }
-
-            const insuranceName = await this.insuranceservice.getInsuranceTypeByName(settingsConfig, req.body.insuranceName)
-            if (insuranceName.length != 0) {
+            const insurance = await this.insuranceservice.getInsuranceTypeByName(settingsConfig,insuranceName)
+            if (insurance.length != 0) {
                 throw new BadRequest("Insurance Type Already Exist")
             }
-            const InsuranceType = await this.insuranceservice.createInsuranceType(settingsConfig, requestBody);
-            res.status(HttpStatusCode.Created).json(InsuranceType);
+            const InsuranceType = await this.insuranceservice.createInsuranceType(settingsConfig, newBody,req.files);
+            console.log(InsuranceType,"****************************")
+            res.status(HttpStatusCode.Created).json(InsuranceType.insuranceName);
         } catch (error) {
             next(error);
         }

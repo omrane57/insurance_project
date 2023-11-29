@@ -2,6 +2,42 @@ const { UUID } = require("sequelize");
 const insuranceTypeConfig = require("../../../model-config/insuranceTypeConfig");
 const { startTransaction } = require("../../../sequelize/transaction");
 const { v4 } = require("uuid");
+const fs = require('fs/promises');
+function generateUniqueFileName(originalFileName) {
+
+    const timestamp = Date.now();
+    const uniqueIdentifier = Math.random().toString(36).substring(7);
+    const fileExtension = originalFileName.split('.').pop(); // Get the file extension
+    return `${timestamp}-${uniqueIdentifier}.${fileExtension}`;
+}
+const uploadImage = async (file) => {
+
+
+    try {
+        // Check if image file is included
+        if (file) {
+          let dynamicDirectory;
+          dynamicDirectory = 'D:/insurance_final_project/uploadimages/insurance/insurancephoto';
+          const uniqueFileName = generateUniqueFileName(file.image.name);
+          await fs.mkdir(dynamicDirectory, { recursive: true });
+          const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
+          await fs.writeFile(finalFileLocation, file.image.data);
+          if (file.image.mimetype != 'image/jpeg') {
+          throw  new Error('Invalid file type. Only JPEG files are allowed.');
+  
+        } 
+            // Access the file location and name
+            const fileLocation = finalFileLocation; // File path
+            const fileName = uniqueFileName; // File name
+  
+            return { "fileLocation": fileLocation, "fileName": fileName };
+        } else {
+            return { error: 'Image file is required.' };
+        }
+    } catch (error) {
+        throw error;
+    }
+  };
 class InsuranceTypeService {
     constructor() { }
 
@@ -44,23 +80,31 @@ class InsuranceTypeService {
     async getAllInsuranceTypeById(settingsConfig, insuranceTypeId) {
         const t = await startTransaction();
         try {
-            const data = await insuranceTypeConfig.model.findAndCountAll({ transaction: t, id: insuranceTypeId })
-            await t.commit();
-            return data;
-        }
-        catch (error) {
-            await t.rollback();
-            throw error;
+          const logger = settingsConfig.logger;
+          logger.info(`[inSuranceService] : Inside getinSuranceByUsername`);
+          const data = await insuranceTypeConfig.model.findOne({
+            where: { id: insuranceTypeId },
+            paranoid:false,
+            transaction: t,
+          });
+          return data
+          await t.commit();
+          return data;
+        } catch (error) {
+          await t.rollback();
+          throw error;
         }
 
     }
 
     //Create InsuranceType
-    async createInsuranceType(settingsConfig, body) {
+    async createInsuranceType(settingsConfig, body,file) {
         const t = await startTransaction();
         try {
             body.id = v4()
             body.status = true
+            const fileResult = await uploadImage(file);
+            body.insuranceImg=fileResult.fileLocation
             const data = await insuranceTypeConfig.model.create(body, { transaction: t });
             await t.commit();
             return data;

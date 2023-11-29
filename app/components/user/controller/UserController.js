@@ -45,6 +45,7 @@ class UserController {
                 return res.status(200).json(employee);
             }
             if (role == "Customer") {
+
                 const emp = await this.newcustomerService.getCustomerByUsername(settingsConfig, username)
                 if (emp.length == 0) {
                     throw new Error("invalid username")

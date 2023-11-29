@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     customerName: DataTypes.STRING,
     title: DataTypes.STRING,
     message: DataTypes.STRING,
-    contactDate: DataTypes.DATE,
+    contactDate: DataTypes.STRING,
     reply: DataTypes.STRING,
     customerId:DataTypes.UUID,
     policyId:DataTypes.UUID

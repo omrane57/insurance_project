@@ -16,9 +16,10 @@ class PlanConfig {
             profitRatio: "profitRatio",
             commissionAmount: "commissionAmount",
             status: "status",
-            insuranceTypeId: "insuranceTypeId"
-
-
+           insuranceTypeId: "insuranceTypeId",
+           insuranceType:"insuranceType",
+           planName:"planName"
+         
         })
         //   this.association=Object.freeze({
         //     accountFilter:'accountFilter',

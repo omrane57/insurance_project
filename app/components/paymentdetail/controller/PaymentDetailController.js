@@ -43,17 +43,13 @@ class PaymentDetailController {
     try {
       const logger = settingsConfig.logger;
       logger.info(`[PaymentDetailController] : Inside create`);
-      const agentId = req.params.agentId;
       const policyId = req.params.policyId;
-      if (!agentId) {
-        throw new BadRequest("Please enter agent Id");
-      }
+     
       if (!policyId) {
         throw new BadRequest("Please enter policy Id");
       }
       const data = await this.paymentdetailservice.createPaymentDetail(
         settingsConfig,
-        agentId,
         policyId,
         req.body
       );
