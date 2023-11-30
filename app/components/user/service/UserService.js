@@ -31,7 +31,8 @@ class UserService{
             id: employeeConfig.fieldMapping.id,
             employeeName: employeeConfig.fieldMapping.employeeName,
             email: employeeConfig.fieldMapping.email,
-            role: employeeConfig.fieldMapping.role
+            role: employeeConfig.fieldMapping.role,
+            img:employeeConfig.fieldMapping.img
           };
          
         
@@ -39,9 +40,9 @@ class UserService{
     
           const selectArray = Object.values(arrtibutesToReturnForEmployee);
           const passwordObj = await employeeConfig.model.findOne({
-            ...parseFilterQueries(queryParams, employeeConfig.filter, { [employeeConfig.fieldMapping.username]: username }), t
+            ...parseFilterQueries(queryParams, employeeConfig.filter, { [employeeConfig.fieldMapping.username]: username }), t,attributes:selectArray
           });
-    
+          
           const result = bcrypt.compare(password, await passwordObj.password);
     
           if (!(await result)) {
@@ -93,7 +94,8 @@ class UserService{
             nominee:customerConfig.fieldMapping.nominee,
             nomineeRelation:customerConfig.fieldMapping.nomineeRelation,
             username:customerConfig.fieldMapping.username,
-            agentId:customerConfig.fieldMapping.agentId
+            agentId:customerConfig.fieldMapping.agentId,
+            // img:customerConfig.fieldMapping.img
           }
     
     

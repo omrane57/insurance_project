@@ -12,7 +12,8 @@ class EmployeeConfig{
             role:"role",
             username:"username",
             password:"password",
-            email:"email"
+            email:"email",
+            img:"employeeImgUrl"
         })
       //   this.association=Object.freeze({
       //     accountFilter:'accountFilter',

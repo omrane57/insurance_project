@@ -21,7 +21,7 @@ const uploadImage = async (file) => {
      
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'D:/insurance_final_project/uploadimages/plan/planphoto';
+        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/plan/planphoto';
         const uniqueFileName = generateUniqueFileName(file.image.name);
         
         await fs.mkdir(dynamicDirectory, { recursive: true });
@@ -180,7 +180,9 @@ class EmployeeService {
         employeeName: employeeConfig.fieldMapping.employeeName,
         username: employeeConfig.fieldMapping.username,
         email: employeeConfig.fieldMapping.email,
-        role: employeeConfig.fieldMapping.role
+        role: employeeConfig.fieldMapping.role,
+        img:employeeConfig.fieldMapping.img
+
 
       }
 

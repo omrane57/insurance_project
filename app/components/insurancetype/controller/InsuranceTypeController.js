@@ -25,7 +25,7 @@ class InsuranceTypeController {
 
     //Create InsuranceType
     async createInsuranceType(settingsConfig, req, res, next) {
-        console.log("122342444444444444567890-")
+       
         try {
             const logger = settingsConfig.logger;
             logger.info("[InsuranceType_CONTROLLER] : Inside createInsuranceType");
@@ -42,15 +42,13 @@ class InsuranceTypeController {
                 if (typeof insuranceName != "string") {
                     throw new Error("invalid input")
                 }
-
-          
-
             const insurance = await this.insuranceservice.getInsuranceTypeByName(settingsConfig,insuranceName)
+  
             if (insurance.length != 0) {
                 throw new BadRequest("Insurance Type Already Exist")
             }
             const InsuranceType = await this.insuranceservice.createInsuranceType(settingsConfig, newBody,req.files);
-            console.log(InsuranceType,"****************************")
+            
             res.status(HttpStatusCode.Created).json(InsuranceType.insuranceName);
         } catch (error) {
             next(error);

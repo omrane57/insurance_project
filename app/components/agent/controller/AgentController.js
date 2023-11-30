@@ -13,6 +13,7 @@ class AgentController {
     try {
       const logger = settingsConfig.logger;
       logger.info(`[Agent_CONTROLLER] : Inside createAgent`);
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
       const employeeId =req.params
       const newBody=JSON.parse(req.body.data)
       if(!req.files){
