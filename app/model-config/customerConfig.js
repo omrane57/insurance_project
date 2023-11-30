@@ -20,7 +20,9 @@ class CustomerConfig {
       mobileno: "mobileno",
       nominee: "nominee",
       nomineeRelation: "nomineeRelation",
+      address:'address',
       agentId: "agentId",
+      img:"customerImgUrl"
     });
     //   this.association=Object.freeze({
     //     accountFilter:'accountFilter',

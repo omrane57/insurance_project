@@ -10,8 +10,9 @@ class CustomerController {
     this.newCustomerService = customerService;
   }
   async createCustomer(settingsConfig, req, res, next) {
-  
+
     try {
+      
       const logger = settingsConfig.logger;
       logger.info(`[Customer_CONTROLLER] : Inside createCustomer`);
       let newBody=JSON.parse(req.body.data)
@@ -53,7 +54,7 @@ class CustomerController {
       ) {
         calculatedAge--;
       }
-      newBody.age = calculatedAge;
+      newBody.age = calculatedAge;  
       newBody.role="Customer"
       const newUsername="Cust" + username
 

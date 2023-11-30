@@ -20,9 +20,8 @@ const uploadPanCard = async (file) => {
       // Check if image file is included
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerphoto';
         const uniqueFileName = generateUniqueFileName(file.name);
-        
         await fs.mkdir(dynamicDirectory, { recursive: true });
         const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
         await fs.writeFile(finalFileLocation, file.data);
@@ -48,7 +47,7 @@ const uploadAddharCard = async (file) => {
     // Check if image file is included
     if (file) {
       let dynamicDirectory;
-      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+      dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerpancard';
       const uniqueFileName = generateUniqueFileName(file.name);
       
       await fs.mkdir(dynamicDirectory, { recursive: true });
@@ -76,7 +75,7 @@ const uploadImage = async (file) => {
     // Check if image file is included
     if (file) {
       let dynamicDirectory;
-      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
+      dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerpancard';
       const uniqueFileName = generateUniqueFileName(file.name);
       
       await fs.mkdir(dynamicDirectory, { recursive: true });
@@ -175,15 +174,16 @@ async createCustomer(settingsConfig, body,file) {
                 customerName:customerConfig.fieldMapping.customerName,
                 dob:customerConfig.fieldMapping.dob,
                 email:customerConfig.fieldMapping.email,
-                role:customerConfig.fieldMapping.role,
+                // role:customerConfig.fieldMapping.role,
                 state:customerConfig.fieldMapping.state,
                 city:customerConfig.fieldMapping.city,
                 pincode:customerConfig.fieldMapping.pincode,
                 mobileno:customerConfig.fieldMapping.mobileno,
                 nominee:customerConfig.fieldMapping.nominee,
                 nomineeRelation:customerConfig.fieldMapping.nomineeRelation,
-                username:customerConfig.fieldMapping.username,
-                agentId:customerConfig.fieldMapping.agentId
+                address:customerConfig.fieldMapping.address
+                // username:customerConfig.fieldMapping.username
+             
                 
             }
             const attributeToReturn=Object.values(selectArray)
@@ -237,7 +237,9 @@ async createCustomer(settingsConfig, body,file) {
                 nominee:customerConfig.fieldMapping.nominee,
                 nomineeRelation:customerConfig.fieldMapping.nomineeRelation,
                 username:customerConfig.fieldMapping.username,
-                agentId:customerConfig.fieldMapping.agentId
+                agentId:customerConfig.fieldMapping.agentId,
+                address:customerConfig.fieldMapping.address,
+                img:customerConfig.fieldMapping.img
                 
             }
             // const attributeToReturn=Object.values(selectArray)

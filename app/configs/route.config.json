@@ -108,6 +108,7 @@
       "secured": false,
       "action":"deleteState"
     },
+    
     {
       "route": "/api/v1/city/:stateId",
       "method": "POST",
@@ -116,7 +117,7 @@
       "action":"createCity"
     },
     {
-      "route": "/api/v1/city/:stateId",
+      "route": "/api/v1/city",
       "method": "GET",
       "controller": "../components/city/controller/CityController",
       "secured": false,

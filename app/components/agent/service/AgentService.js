@@ -76,6 +76,7 @@ class AgentService {
       body.id = v4();
       body.username = "Agent" + body.username;
       body.password = hashpassword;
+      body.role="Agent"
       const fileResult = await uploadImage(file);
       body.agentImgUrl=fileResult.fileLocation
       const data = await agentConfig.model.create(body, { transaction: t });

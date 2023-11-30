@@ -131,7 +131,11 @@ class InsuranceTypeService {
     //Create InsuranceType
     async createInsuranceType(settingsConfig, body,file) {
         const t = await startTransaction();
+        const logger = settingsConfig.logger;
+        logger.info(`[inSuranceService] : Inside createInsuranceType`);
         try {
+
+            
             body.id = v4()
             body.status = true
             const fileResult = await uploadImage(file);

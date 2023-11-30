@@ -13,7 +13,7 @@ class EmployeeConfig{
             username:"username",
             password:"password",
             email:"email",
-            status:"status"
+            img:"employeeImgUrl"
         })
       //   this.association=Object.freeze({
       //     accountFilter:'accountFilter',

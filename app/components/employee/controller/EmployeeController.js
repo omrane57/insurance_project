@@ -5,6 +5,7 @@ const { HttpStatusCode } = require("axios");
 const { v4 } = require('uuid');
 const { validateUuid } = require("../../../utils/uuid");
 const { checkJwtHS256 } = require("../../../middleware/authService");
+const { log } = require("winston");
 class EmployeeController {
     constructor() {
         this.newEmployeeService = employeeService
@@ -14,6 +15,8 @@ class EmployeeController {
   
             const logger = settingsConfig.logger;
             logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
+            
+            console.log(req.files,"??????????????????????????");
             let newBody=JSON.parse(req.body.data)
             if(!req.files){
                 throw new Error("Please,Upload The Photo")
@@ -28,9 +31,9 @@ class EmployeeController {
             if (typeof employeeName != "string" || typeof username != "string" || typeof password != "string" || typeof email != "string") {
                 throw new Error("invalid input")
             }
-            const newUsername="EMP"+username
+            const newUsername="Emp"+username
             const user = await this.newEmployeeService.getEmpByUsername(settingsConfig, newUsername)
-            
+     
             if (user.length != 0) {
                 throw new Error("username Already Taken")
             }
@@ -38,6 +41,7 @@ class EmployeeController {
             const data = await this.newEmployeeService.createEmployee(settingsConfig,newBody,req.files)
             res.status(HttpStatusCode.Ok).json(data)
         } catch (error) {
+            
             next(error)
         }
     }
