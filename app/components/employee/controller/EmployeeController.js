@@ -11,8 +11,7 @@ class EmployeeController {
     }
     async createEmployee(settingsConfig, req, res, next) {
         try {
-    console.log(req.files)
-           return
+  
             const logger = settingsConfig.logger;
             logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
             let newBody=JSON.parse(req.body.data)

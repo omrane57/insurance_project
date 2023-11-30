@@ -319,7 +319,7 @@
       "action": "updateInsuranceType"
     },
      {
-      "route": "/api/v1/plan/:insuranceTypeId",
+      "route": "/api/v1/plan",
       "method": "GET",
       "controller": "../components/plan/controller/PlanController.js",
       "secured":false,
@@ -340,7 +340,7 @@
       "action": "getPlanById"
     },
       {
-      "route": "/api/v1/plan/:insuranceTypeId/:planId",
+      "route": "/api/v1/plan/:planId",
       "method": "DELETE",
       "controller": "../components/plan/controller/PlanController.js",
       "secured":false,
@@ -429,6 +429,13 @@
       "controller": "../components/policy/controller/PolicyController.js",
       "secured": false,
       "action":"deletePolicy"
+    },
+    {
+      "route": "/api/v1/email/allCustomer",
+      "method": "POST",
+      "controller": "../components/user/controller/UserController",
+      "secured": false,
+      "action":"sendEmailForAllCustomer"
     }
   
      

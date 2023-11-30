@@ -23,7 +23,7 @@ class PlanController {
       let insuranceTypeId = req.params.insuranceTypeId;
       const { count, rows } = await this.planservice.getAllPlans(
         settingsConfig,
-        insuranceTypeId,
+     
         queryParams
       );
       res.set("X-Total-Count", count);
@@ -102,7 +102,7 @@ class PlanController {
       "maxInvestmentAmount",
       "profitRatio",
       "commissionAmount","planName"];
-      const data=await this.insuranceTypeService.getAllInsuranceTypeById(settingsConfig,insuranceTypeId)
+      const data=await this.insuranceTypeService.getAllInsuranceTypeById(settingsConfig,insuranceTypeId,req.query)
       newBody.insuranceType=await data.insuranceName
       for (const field of requiredFields) {
         if (newBody[field] === null || newBody[field] === undefined) {
@@ -179,7 +179,6 @@ class PlanController {
       const logger = settingsConfig.logger;
       logger.info(`[PlanController] : Inside deletePlan`);
 
-      const insuranceTypeId = req.params.insuranceTypeId;
       const planId = req.params.planId;
       const plan = await this.planservice.getAllPlansById(
         settingsConfig,

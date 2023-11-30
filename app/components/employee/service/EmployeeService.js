@@ -149,7 +149,8 @@ class EmployeeService {
         employeeName: employeeConfig.fieldMapping.employeeName,
         username: employeeConfig.fieldMapping.username,
         email: employeeConfig.fieldMapping.email,
-        role: employeeConfig.fieldMapping.role
+        role: employeeConfig.fieldMapping.role,
+        status:employeeConfig.fieldMapping.status
       }
       const attributeToReturn = Object.values(selectArray)
       const includeQuery = queryParams.include || [];

@@ -66,7 +66,7 @@ class PlanService {
         }
     }
     //Get All Plans
-    async getAllPlans(settingsConfig, insuranceTypeId, queryParams) {
+    async getAllPlans(settingsConfig,queryParams) {
         const t = await startTransaction();
         try {
             const logger = settingsConfig.logger;
@@ -94,7 +94,7 @@ class PlanService {
             }
             const { count, rows } = await planConfig.model.findAndCountAll({
                 transaction: t,
-                ...parseFilterQueries(queryParams, planConfig.filter, { insurance_type_id: insuranceTypeId }),
+                ...parseFilterQueries(queryParams, planConfig.filter),
                 attributes: selectArray,
                 ...parseLimitAndOffset(queryParams),
                 ...preloadAssociations(associations)
