@@ -18,6 +18,18 @@ class FeedbackService {
         }
 
     }
+    async getFeedbackByPolicyId(settingsConfig,policyId){
+        const t = await startTransaction();
+        try {
+            const data = await feedbackConfig.model.findOne({where:{policyId:policyId}, transaction: t })
+            await t.commit();
+            return data
+        } catch (error) {
+            console.log(error);
+            await t.rollback();
+            throw error;
+        }
+    }
 
     async createFeedback(settingsConfig, body) {
         const t = await startTransaction();

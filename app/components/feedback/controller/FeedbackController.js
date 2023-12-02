@@ -19,9 +19,19 @@ class FeedBackController {
       next(error);
     }
   }
+  async getFeedbackByPolicyId(settingsConfig,req,res,next){
+    try {
+      const logger = settingsConfig.logger;
+      logger.info(`[Feedback_CONTROLLER] : Inside getFeedbackByPolicyId`);
+      const{policyId}=req.params
+      const data = await this.feedbackservice.getFeedbackByPolicyId(settingsConfig,policyId);
+      res.status(HttpStatusCode.Ok).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   async createFeedback(settingsConfig, req, res, next) {
-    console.log("HGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
     try {
       const logger = settingsConfig.logger;
       logger.info(`[FeedbackController] : Inside createFeedback`);
@@ -46,6 +56,7 @@ class FeedBackController {
       const date=new Date()
       const newDate=date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
       req.body.contactDate=newDate
+      req.body.reply='pending...'
       const newFeedback = await this.feedbackservice.createFeedback(settingsConfig, req.body)
       res.status(HttpStatusCode.Created).json(newFeedback);
       return;
@@ -60,6 +71,7 @@ class FeedBackController {
 
       const { feedbackId } = req.params;
       const {reply}=req.body
+  
       const requiredFields = ["reply"];
       for (const field of requiredFields) {
           if (req.body[field] === null || req.body[field] === undefined) {

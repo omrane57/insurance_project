@@ -19,9 +19,10 @@ class PolicyController {
 
   async createPolicy(settingsConfig, req, res, next) {
     try {
-      // const logger = settingsConfig.logger;
-      // logger.info(`[POLICY_CONTROLLER] : Inside createPolicy`);
+      const logger = settingsConfig.logger;
+      logger.info(`[POLICY_CONTROLLER] : Inside createPolicy`);
       const { amount, years, typeofpremimum, paymentMethod } = req.body;
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",req.body);
       const { planId } = req.params;
       const policyIds = v4();
       req.body.id = policyIds;
@@ -91,7 +92,7 @@ class PolicyController {
       if (rows[0].status == false) {
         throw new Error("You are Not Eligible To Apply For This Policy");
       }
-      if (years < rows[0].policyTermMin || years < rows[0].policyTermMax) {
+      if (years < rows[0].policyTermMin && years < rows[0].policyTermMax) {
         throw new Error(
           "Invalid Year,Please Read The Policy Term and Condition CareFully"
         );

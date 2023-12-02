@@ -46,7 +46,7 @@ class PolicyService {
         id: policyConfig.fieldMapping.id,
         insuranceType: policyConfig.fieldMapping.insuranceType,
         planName: policyConfig.fieldMapping.planName,
-        dateCreated: policyConfig.fieldMapping.dateCreated,
+        date: policyConfig.fieldMapping.date,
         maturityDate: policyConfig.fieldMapping.maturityDate,
         primimumType: policyConfig.fieldMapping.primimumType,
         totalPremimumAmount: policyConfig.fieldMapping.totalPremimumAmount,
@@ -55,9 +55,8 @@ class PolicyService {
         requestStatus: policyConfig.fieldMapping.requestStatus,
         customer_id: policyConfig.fieldMapping.customer_id,
         agent_id: policyConfig.fieldMapping.agent_id,
-        plan_id: policyConfig.fieldMapping.plan_id,
-        aadharMetadata: policyConfig.fieldMapping.aadharMetadata,
-        panMetadata: policyConfig.fieldMapping.panMetadata,
+        plan_id: policyConfig.fieldMapping.plan_id
+   
       };
       const attributeToReturn = Object.values(selectArray);
       const includeQuery = queryParams.include || [];

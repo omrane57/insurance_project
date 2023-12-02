@@ -320,7 +320,7 @@
       "action": "updateInsuranceType"
     },
      {
-      "route": "/api/v1/plan/:insuranceTypeId",
+      "route": "/api/v1/plan",
       "method": "GET",
       "controller": "../components/plan/controller/PlanController.js",
       "secured":false,
@@ -374,6 +374,13 @@
       "controller": "../components/feedback/controller/FeedbackController.js",
       "secured":false,
       "action": "updateFeedBack"
+    },
+    {
+      "route": "/api/v1/feedback/:policyId",
+      "method": "GET",
+      "controller": "../components/feedback/controller/FeedbackController.js",
+      "secured":false,
+      "action": "getFeedbackByPolicyId"
     },
      {
       "route": "/api/v1/paymentdetails",

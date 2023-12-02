@@ -10,7 +10,7 @@ class PolicyConfig {
       id: "id",
       insuranceType: "insuranceType",
       planName: "planName",
-      dateCreated: "dateCreated",
+      date: "date",
       maturityDate: "maturityDate",
       primimumType: "primimumType",
       totalPremimumAmount: "totalPremimumAmount",
@@ -19,9 +19,8 @@ class PolicyConfig {
       requestStatus: "requestStatus",
       customer_id: "customer_id",
       agent_id: "agent_id",
-      plan_id: "plan_id",
-      aadharMetadata: "aadharMetadata",
-      panMetadata: "panMetadata",
+      plan_id: "plan_id"
+    
     });
 
     this.model = db.policy;
