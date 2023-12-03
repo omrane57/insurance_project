@@ -166,7 +166,8 @@ class UserController {
         
 
           const result=  await axios.post(`http://127.0.0.1:3000/api/v1/email/allCustomer`, req.body, { headers: { auth: "sdetrtgrgtregregretgertgrtg" } })
-            res.status(HttpStatusCode.Ok).json(result)
+          console.log(result.data)  
+          res.status(HttpStatusCode.Ok).send(result.data)
         } catch (error) {
             next(error)
         }

@@ -131,7 +131,7 @@
       "action":"getCity"
     },
     {
-      "route": "/api/v1/city/:cityId/:stateId",
+      "route": "/api/v1/city/:cityId",
       "method": "PUT",
       "controller": "../components/city/controller/CityController",
       "secured": false,
@@ -266,7 +266,7 @@
         "action":"getAllAgentCustomerDetail"
       },
       {
-        "route": "/api/v1/agentcustomerdetail/:agentCustomerDetailById",
+        "route": "/api/v1/agentcustomerdetail/:agentId",
         "method": "GET",
         "controller": "../components/agentcustomerdetail/controller/AgentCustomerDetailConstructor",
         "secured": false,
@@ -438,7 +438,21 @@
       "secured": false,
       "action":"sendEmailForAllCustomer"
     }
-  
+  ,
+  {
+    "route": "/api/v1/allCustomer/agentId/:agentId",
+    "method": "GET",
+    "controller": "../components/customer/controller/CustomerController",
+    "secured": false,
+    "action":"getAllCustomerByAgentId"
+  },
+  {
+    "route": "/api/v1/policy/:planId/agentId/:agentId",
+    "method": "POST",
+    "controller": "../components/policy/controller/PolicyController.js",
+    "secured": false,
+    "action":"createPolicyByAgent"
+  }
      
   ]
 }

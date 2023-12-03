@@ -6,7 +6,8 @@ const { tokencreation } = require("../../../middleware/authService");
 const { preloadAssociations } = require('../../../sequelize/association');
 const { v4 } = require("uuid");
 const fs = require('fs/promises');
-
+const bucket = require("../../../firebase");
+let a
 function generateUniqueFileName(originalFileName) {
 
   const timestamp = Date.now();
@@ -14,30 +15,54 @@ function generateUniqueFileName(originalFileName) {
   const fileExtension = originalFileName.split('.').pop(); // Get the file extension
   return `${timestamp}-${uniqueIdentifier}.${fileExtension}`;
 }
-const uploadImage = async (file) => {
+const uploadImage = async (files,body,t) => {
 
 
   try {
+    const file =files.image;
+  const uniqueFileName = generateUniqueFileName(file.name);
+  const fileLocation = `employee/photo/${uniqueFileName}`;
+
+  const fileStream = bucket.file(fileLocation).createWriteStream({
+    metadata: {
+      contentType: file.mimetype,
+    },
+  });
+
+  fileStream.on('error', (err) => {
+
+    console.error(err);
+    t.rollback()
+    // return res.status(500).json({ error: 'Failed to upload file to Firebase Storage.' });
+  });
+
+  fileStream.on('finish', async () => {
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileLocation}`;
+    body.employeeImgUrl=publicUrl
+    const data = await employeeConfig.model.create(body, { transaction: t });
+    t.commit()
+    return bucket.name
+  });
+
+  fileStream.end(file.data);
      
-      if (file) {
-        let dynamicDirectory;
-        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/plan/planphoto';
-        const uniqueFileName = generateUniqueFileName(file.image.name);
+      // if (file) {
+      //   let dynamicDirectory;
+      //   dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/plan/planphoto';
+      //   const uniqueFileName = generateUniqueFileName(file.image.name);
         
-        await fs.mkdir(dynamicDirectory, { recursive: true });
-        const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
-        await fs.writeFile(finalFileLocation, file.image.data);
-        if (file.image.mimetype != 'image/jpeg') {
-        throw  new Error('Invalid file type. Only JPEG files are allowed.');
+      //   await fs.mkdir(dynamicDirectory, { recursive: true });
+      //   const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
+      //   await fs.writeFile(finalFileLocation, file.image.data);
+      //   if (file.image.mimetype != 'image/jpeg') {
+      //   throw  new Error('Invalid file type. Only JPEG files are allowed.');
 
-      } 
-          const fileLocation = finalFileLocation; 
-          const fileName = uniqueFileName; 
+      // } 
+          // const fileLocation = finalFileLocation; 
+          // const fileName = uniqueFileName; 
 
-          return { "fileLocation": fileLocation, "fileName": fileName };
-      } else {
-          return { error: 'Image file is required.' };
-      }
+          // return { "fileLocation": fileLocation, "fileName": fileName };
+      
   } catch (error) {
       throw error;
   }
@@ -55,13 +80,12 @@ class EmployeeService {
       body.username = "Emp" + body.username
       body.password = hashpassword;
       body.status = true;
-      const fileResult = await uploadImage(file);
-      body.employeeImgUrl=fileResult.fileLocation
-      const data = await employeeConfig.model.create(body, { transaction: t });
-      await t.commit();
-      return data;
+      let fileResult = await uploadImage(file,body,t);
+
+      // const data = await employeeConfig.model.create(body, { transaction: t });
+      
     } catch (error) {
-      await t.rollback();
+      // await t.rollback();
       throw error;
     }
   }
