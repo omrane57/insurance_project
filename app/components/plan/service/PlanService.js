@@ -85,7 +85,8 @@ class PlanService {
                 profitRatio: planConfig.fieldMapping.profitRatio,
                 commissionAmount: planConfig.fieldMapping.commissionAmount,
                 status: planConfig.fieldMapping.status,
-                insuranceTypeId: planConfig.fieldMapping.insuranceTypeId
+                insuranceTypeId: planConfig.fieldMapping.insuranceTypeId,
+                planName:planConfig.fieldMapping.planName
 
             };
             let selectArray = parseSelectFields(queryParams, attributesToReturn);

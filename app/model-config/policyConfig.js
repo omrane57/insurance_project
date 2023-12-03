@@ -11,6 +11,7 @@ class PolicyConfig {
       insuranceType: "insuranceType",
       planName: "planName",
       date: "date",
+      date: "date",
       maturityDate: "maturityDate",
       primimumType: "primimumType",
       totalPremimumAmount: "totalPremimumAmount",
@@ -20,6 +21,7 @@ class PolicyConfig {
       customer_id: "customer_id",
       agent_id: "agent_id",
       plan_id: "plan_id"
+    
     });
 
     this.model = db.policy;

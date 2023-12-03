@@ -22,7 +22,7 @@ class PaymentDetailService {
   async getPaymentDetailById(settingsConfig, paymentDetailId) {
     const t = await startTransaction();
     try {
-      const data = await insuranceTypeConfig.model.findAndCountAll({
+      const data = await paymentDetailConfig.model.findAndCountAll({
         transaction: t,
         id: paymentDetailId,
       });
@@ -30,7 +30,37 @@ class PaymentDetailService {
       return data;
     } catch (error) {
       await t.rollback();
-      throw error;
+      throw error;  
+    }
+  }
+  async getPaymentDetailByPolicyId(settingsConfig, policyId) {
+    const t = await startTransaction();
+    try {
+      const {count,rows} = await paymentDetailConfig.model.findAndCountAll({where:{policyId:policyId},
+        transaction: t
+      });
+      await t.commit();
+      return rows;
+    } catch (error) {
+      await t.rollback();
+      throw error;  
+    }
+  }
+  
+
+  async updatePaymentByid(settingsConfig,paymenId,body) {
+    const t = await startTransaction();
+    try {
+      body.paymentStatus=true
+      
+      const data = await paymentDetailConfig.model.update(body,{where:{id:paymenId},
+        transaction: t
+      });
+      await t.commit();
+      return data;
+    } catch (error) {
+      await t.rollback();
+      throw error;  
     }
   }
 

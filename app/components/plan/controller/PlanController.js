@@ -20,7 +20,7 @@ class PlanController {
       logger.info(`[ContactController] : Inside getAllContactdetails`);
 
       const queryParams = req.query;
-      let insuranceTypeId = req.params.insuranceTypeId;
+      // let insuranceTypeId = req.params.insuranceTypeId;
       const { count, rows } = await this.planservice.getAllPlans(
         settingsConfig,
      

@@ -36,7 +36,10 @@ class UserController {
             }
             if (role == "Employee"||role=="Admin") {
                 const emp = await this.newemployeeService.getEmpByUsername(settingsConfig, username)
-             
+               
+                if(emp[0].status==false){
+                    throw new Error("your status inActive")
+                }
                 if (emp.length == 0) {
                     throw new Error("invalid username")
                 }
@@ -48,6 +51,9 @@ class UserController {
             if (role == "Customer") {
 
                 const emp = await this.newcustomerService.getCustomerByUsername(settingsConfig, username)
+                if(emp[0].status==false){
+                    throw new Error("your status inActive")
+                }
                 if (emp.length == 0) {
                     throw new Error("invalid username")
                 }
@@ -58,6 +64,9 @@ class UserController {
             }
             if (role == "Agent") {
                 const emp = await this.newagentService.getAgentByUsername(settingsConfig, username)
+                if(emp[0].status==false){
+                    throw new Error("your status inActive")
+                }
                 if (emp.length == 0) {
                     throw new Error("invalid username")
                 }

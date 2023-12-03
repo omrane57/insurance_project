@@ -38,6 +38,50 @@ class PaymentDetailController {
       next(error);
     }
   }
+  async getPaymentDetailByPolicyId(settingsConfig, req, res, next) {
+    try {
+      const logger = settingsConfig.logger;
+      logger.info(`[PaymentDetailController] : Inside getContactdetailById`);
+
+      const {policyId} = req.params;
+
+      const paymentDetail =
+        await this.paymentdetailservice.getPaymentDetailByPolicyId(
+          settingsConfig,
+          policyId
+        );
+      res.status(HttpStatusCode.Ok).json(paymentDetail);
+      return;
+    } catch (error) {
+      next(error);
+    }
+  }
+  async updatePayment(settingsConfig, req, res, next) {
+    try {
+      const logger = settingsConfig.logger;
+      logger.info(`[PaymentDetailController] : Inside updatePayment`);
+
+      const {paymentId} = req.params;
+      let date=new Date()
+      let currentdate = date.getDate();
+      let currentMonth = date.getMonth();
+      let currentYear = date.getFullYear();
+      
+       req.body.paymentDate=
+        currentYear + "-" + currentMonth + "-" + currentdate;
+      const paymentDetail =
+        await this.paymentdetailservice.updatePaymentByid(
+          settingsConfig,
+          paymentId,
+          req.body
+        );
+      res.status(HttpStatusCode.Ok).json(paymentDetail);
+      return;
+    } catch (error) {
+      next(error);
+    }
+  }
+
 
   async createPaymentDetail(settingsConfig, req, res, next) {
     try {
