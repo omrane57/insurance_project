@@ -1,24 +1,24 @@
 {
   "development": {
     "username": "postgres",
-    "password": "Om@2401",
-    "database": "insurance_final_project",
+    "password": "root@123",
+    "database": "insurance_project",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":"5432"
   },
   "test": {
     "username": "postgres",
-    "password": "Om@2401",
-    "database": "insurance_final_project",
+    "password": "root@123",
+    "database": "insurance_project",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":"5432"
   },
   "production": {
     "username": "postgres",
-    "password": "Om@2401",
-    "database": "insurance_final_project",
+    "password": "root@123",
+    "database": "insurance_project",
     "host": "127.0.0.1",
     "dialect": "postgres",
     "port":"5432"
