@@ -20,7 +20,7 @@ const uploadPanCard = async (file) => {
       // Check if image file is included
       if (file) {
         let dynamicDirectory;
-        dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerphoto';
+        dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerpancard';
         const uniqueFileName = generateUniqueFileName(file.name);
         await fs.mkdir(dynamicDirectory, { recursive: true });
         const finalFileLocation = `${dynamicDirectory}/${uniqueFileName}`;
@@ -47,7 +47,7 @@ const uploadAddharCard = async (file) => {
     // Check if image file is included
     if (file) {
       let dynamicDirectory;
-      dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerpancard';
+      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customeraddharcard';
       const uniqueFileName = generateUniqueFileName(file.name);
       
       await fs.mkdir(dynamicDirectory, { recursive: true });
@@ -75,7 +75,7 @@ const uploadImage = async (file) => {
     // Check if image file is included
     if (file) {
       let dynamicDirectory;
-      dynamicDirectory = 'C:/Users/aksha/OneDrive/Desktop/insurance/uploadimages/customer/customerpancard';
+      dynamicDirectory = 'D:/insurance_final_project/uploadimages/customer/customerphoto';
       const uniqueFileName = generateUniqueFileName(file.name);
       
       await fs.mkdir(dynamicDirectory, { recursive: true });
@@ -221,6 +221,61 @@ async createCustomer(settingsConfig, body,file) {
             throw error
         }
     }
+    async getAllCustomerByAgentId(settingsConfig,agentId,queryParams){
+      const t= await startTransaction() 
+      try {
+          const selectArray={
+              id:customerConfig.fieldMapping.id,
+              customerName:customerConfig.fieldMapping.customerName,
+              dob:customerConfig.fieldMapping.dob,
+              email:customerConfig.fieldMapping.email,
+              // role:customerConfig.fieldMapping.role,
+              state:customerConfig.fieldMapping.state,
+              city:customerConfig.fieldMapping.city,
+              pincode:customerConfig.fieldMapping.pincode,
+              mobileno:customerConfig.fieldMapping.mobileno,
+              nominee:customerConfig.fieldMapping.nominee,
+              nomineeRelation:customerConfig.fieldMapping.nomineeRelation,
+              address:customerConfig.fieldMapping.address
+              // username:customerConfig.fieldMapping.username
+           
+              
+          }
+          const attributeToReturn=Object.values(selectArray)
+          // const includeQuery = queryParams.include || [];
+
+
+          // let association = [];
+          // if (queryParams.include) {
+          //   delete queryParams.include;
+          // }
+          // if (includeQuery) {
+          //   association = this.createAssociation(includeQuery);
+          //   console.log("UserService",association);
+          // }
+    
+      const logger = settingsConfig.logger;
+      logger.info(`[Customer_SERVICE] : Inside getAllCustomer`);
+      const data=await customerConfig.model.findAndCountAll({ transaction: t,
+          ...parseFilterQueries(queryParams, customerConfig.filter,{agentId:agentId}),
+          attributes: attributeToReturn,
+          ...parseLimitAndOffset(queryParams)
+          //  ...preloadAssociations(association),  
+      
+      
+      })
+     if(data==null)
+{
+ throw new Error("Record Does Not Exists")
+
+}       
+      t.commit()
+      return data
+      } catch (error) {
+          t.rollback()
+          throw error
+      }
+  }
     async getCustomerById(settingsConfig,customerId,queryParams){
         const t= await startTransaction() 
         try {

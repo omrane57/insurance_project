@@ -119,7 +119,7 @@ class agentCustomerDetailService {
       throw error;
     }
   }
-  async getAgentCustomerDetailById(settingsConfig, agentCustomerDetailsId, queryParams) {
+  async getAgentCustomerDetailById(settingsConfig, agentId, queryParams) {
     const t = await startTransaction();
     try {
       const attributeToReturn = {
@@ -139,14 +139,12 @@ class agentCustomerDetailService {
       }
       const logger = settingsConfig.logger;
       logger.info(`[AgentCustomerDetail_SERVICE] : Inside getAgentById`);
-      const data = await agentCustomerDetailsConfig.model.findOne({
-        where: { id: agentCustomerDetailsId },
+      const data = await agentCustomerDetailsConfig.model.findAll({
+        where: { agentId: agentId },
         attributes: selectArray,
         transaction: t,
       });
-      if (data == null) {
-        throw new Error("AgentCustomerDetail Does Not Exists With Given Id");
-      }
+      
       t.commit();
       return data;
     } catch (error) {

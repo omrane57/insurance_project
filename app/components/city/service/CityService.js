@@ -27,6 +27,21 @@ class CityService{
           throw error;
         }
       } 
+      async getcityBycityName(settingsConfig, cityName) {
+        const t = await startTransaction();
+        try {
+          const logger = settingsConfig.logger;
+          logger.info(`[cityService] : Inside getcityBycityName`);
+        
+          
+          const data = await cityConfig.model.findAll({where:{cityName:cityName}}, { transaction: t });
+          await t.commit();
+          return data;
+        } catch (error) {
+          await t.rollback();
+          throw error;
+        }
+      } 
     async deleteCity(settingsConfig,cityId,stateId,queryParams){
         const t= await startTransaction() 
         try {
@@ -74,7 +89,7 @@ class CityService{
             throw error
         }
     }
-    async getCity(settingsConfig,cityId,stateId,queryParams){
+    async getCity(settingsConfig,cityId,queryParams){
         const t= await startTransaction() 
         try {
             const attributeToReturn={
@@ -92,7 +107,7 @@ class CityService{
         const logger = settingsConfig.logger;
         logger.info(`[City_SERVICE] : Inside getCity`);
         const data = await cityConfig.model.findOne({
-            where: { id: cityId,stateId:stateId },
+            where: { id: cityId},
             attributes: selectArray,
             transaction: t,
             
@@ -111,13 +126,13 @@ if(data==null)
         }
     }
 
-async updateCity(settingsConfig, cityId,stateId, body) {
+async updateCity(settingsConfig, cityId,body) {
     const t = await startTransaction();
     try {
       const logger = settingsConfig.logger;
       logger.info(`[CITY_SERVICE] : Inside C`);
       let cityToBeUpdate = await cityConfig.model.update(body, {
-        where: { id: cityId,stateId:stateId },
+        where: { id: cityId},
         transaction: t,
       });
    

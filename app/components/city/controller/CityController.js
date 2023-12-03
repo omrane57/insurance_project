@@ -22,6 +22,10 @@ class CityController {
             if (typeof cityName != "string") {
                 throw new Error("Invalid cityName")
             }
+            const findCity=await this.newCityService.getcityBycityName(settingsConfig,cityName)
+            if(findCity.length!=0){
+               throw new Error("city already exist")
+            }
             const state = await this.newCityService.createCity(settingsConfig, req.body,stateId);
             return res.status(200).json(state);
         } catch (error) {
@@ -80,14 +84,14 @@ class CityController {
             const logger = settingsConfig.logger;
             logger.info(`[CITY_CONTROLLER] : Inside updateCity`);
 
-            const { cityId,stateId } = req.params
+            const { cityId} = req.params
  
-            const city = await this.newCityService.getCity(settingsConfig, cityId,stateId, req.query)
+            const city = await this.newCityService.getCity(settingsConfig, cityId,req.query)
             if (city.length == 0) {
                 throw new Error("city Not Found!")
             }
 
-            const [cityToBeUpdated] = await this.newCityService.updateCity(settingsConfig, cityId,stateId, req.body)
+            const [cityToBeUpdated] = await this.newCityService.updateCity(settingsConfig, cityId,req.body)
 
             if (cityToBeUpdated == 0) {
                 throw new Error("Could Not Update city")

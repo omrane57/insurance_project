@@ -12,7 +12,7 @@ class EmployeeController {
     }
     async createEmployee(settingsConfig, req, res, next) {
         try {
-   
+  
             const logger = settingsConfig.logger;
             logger.info(`[EMPLOYEE_CONTROLLER] : Inside createEmployee`);
             

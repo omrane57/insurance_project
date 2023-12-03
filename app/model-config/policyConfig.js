@@ -11,6 +11,7 @@ class PolicyConfig {
       insuranceType: "insuranceType",
       planName: "planName",
       date: "date",
+      date: "date",
       maturityDate: "maturityDate",
       primimumType: "primimumType",
       totalPremimumAmount: "totalPremimumAmount",
