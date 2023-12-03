@@ -389,6 +389,13 @@
       "secured":false,
       "action": "getAllPaymentDetails"
     },
+    {
+      "route": "/api/v1/paymentdetails/payments/:policyId",
+      "method": "GET",
+      "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
+      "secured":false,
+      "action": "getPaymentDetailByPolicyId"
+    },
      {
       "route": "/api/v1/paymentdetails/:paymentDetailId",
       "method": "GET",
@@ -402,6 +409,13 @@
       "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
       "secured":false,
       "action": "createPaymentDetail"
+    },
+    {
+      "route": "/api/v1/paymentdetails/:paymentId",
+      "method": "PUT",
+      "controller": "../components/paymentdetail/controller/PaymentDetailController.js",
+      "secured":false,
+      "action": "updatePayment"
     },
     {
       "route": "/api/v1/policy/:planId",

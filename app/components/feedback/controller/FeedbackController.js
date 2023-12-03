@@ -24,7 +24,8 @@ class FeedBackController {
       const logger = settingsConfig.logger;
       logger.info(`[Feedback_CONTROLLER] : Inside getFeedbackByPolicyId`);
       const{policyId}=req.params
-      const data = await this.feedbackservice.getFeedbackByPolicyId(settingsConfig,policyId);
+
+      const data = await this.feedbackservice.getFeedbackByPolicyId(settingsConfig,policyId,req.query);
       res.status(HttpStatusCode.Ok).json(data);
     } catch (error) {
       next(error);

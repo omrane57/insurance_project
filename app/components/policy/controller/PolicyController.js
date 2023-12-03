@@ -299,7 +299,7 @@ class PolicyController {
     } catch (error) {
       next(error);
     }
-  }
+  } 
 
   async getAllPolicy(settingsConfig, req, res, next) {
     try {

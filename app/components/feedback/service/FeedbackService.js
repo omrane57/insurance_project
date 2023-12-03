@@ -1,7 +1,7 @@
 const { v4 } = require("uuid");
 const feedbackConfig = require("../../../model-config/feedbackConfig");
 const { startTransaction } = require("../../../sequelize/transaction");
-
+const { parseLimitAndOffset, unmarshalBody, parseSelectFields, parseFilterQueries }=require('../../../utils/request');
 class FeedbackService {
     constructor() { }
 
@@ -18,12 +18,24 @@ class FeedbackService {
         }
 
     }
-    async getFeedbackByPolicyId(settingsConfig,policyId){
+    async getFeedbackByPolicyId(settingsConfig,policyId,queryParams){
         const t = await startTransaction();
         try {
-            const data = await feedbackConfig.model.findOne({where:{policyId:policyId}, transaction: t })
+            const selectArray={
+                reply:feedbackConfig.fieldMapping.reply
+                  
+              }
+              const attributeToReturn=Object.values(selectArray)
+              const {rows,count}=await feedbackConfig.model.findAndCountAll({ transaction: t,
+                ...parseFilterQueries(queryParams, feedbackConfig.filter,{policyId:policyId}),
+                attributes: attributeToReturn,
+               
+                  attributes: attributeToReturn,
+                  ...parseLimitAndOffset(queryParams) 
+              })
+          
             await t.commit();
-            return data
+            return rows
         } catch (error) {
             console.log(error);
             await t.rollback();
