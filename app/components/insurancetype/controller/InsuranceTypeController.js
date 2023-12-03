@@ -62,7 +62,7 @@ class InsuranceTypeController {
             logger.info(`[InsuranceTypeController] : Inside updateInsuranceType`);
 
             const { insuranceTypeId } = req.params
-            const user = await this.insuranceservice.getAllInsuranceTypeById(settingsConfig, insuranceTypeId)
+            const user = await this.insuranceservice.getAllInsuranceTypeById(settingsConfig, insuranceTypeId,req.query)
             if (user.length == 0) {
                 throw new Error("User Not Found!")
             }
@@ -87,7 +87,7 @@ class InsuranceTypeController {
 
             const { insuranceTypeId } = req.params
 
-            const InsuranceType = await this.insuranceservice.getAllInsuranceTypeById(settingsConfig, insuranceTypeId)
+            const InsuranceType = await this.insuranceservice.getAllInsuranceTypeById(settingsConfig, insuranceTypeId,req.query)
             if (InsuranceType.length == 0) {
                 throw new Error(" Not Found!")
             }

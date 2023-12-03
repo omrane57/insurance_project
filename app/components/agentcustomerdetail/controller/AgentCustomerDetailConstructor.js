@@ -92,11 +92,11 @@ class AgentCustomerDetailConstructor {
     try {
       const logger = settingsConfig.logger;
       logger.info(`[AgentCustomerDetail_CONTROLLER] : Inside getAgentCustomerDetailById`);
-      const { agentCustomerDetailById } = req.params;
-
+      const { agentId } = req.params;
+      validateUuid(agentId)
       const data = await this.newAgentCustomerDetailService.getAgentCustomerDetailById(
         settingsConfig,
-        agentCustomerDetailById,
+        agentId,
         req.params
       );
       res.set("X-Total-Count", 1);

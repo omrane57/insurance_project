@@ -8,6 +8,7 @@ const { checkJwtHS256 } = require("../../../middleware/authService");
 const agentService = require("../../agent/service/agentService");
 const customerService = require("../../customer/service/CustomerService");
 const loginConfig = require("../../../model-config/loginConfig");
+const axios = require('axios');
 class UserController {
     constructor() {
         this.newuserService = userService
@@ -161,6 +162,21 @@ class UserController {
             const { rows, count } = await this.newuserService.getAllLogins(settingsConfig, queryParams)
             res.set('X-Total-Count', count)
             res.status(HttpStatusCode.Ok).json(await rows)
+        } catch (error) {
+            next(error)
+        }
+    }
+    async sendEmailForAllCustomer(settingsConfig, req, res, next) {
+        try {
+            
+            const logger = settingsConfig.logger;
+            logger.info(`[USER_CONTROLLER] : Inside sendEmailForAllCustomer`);
+          
+        
+
+          const result=  await axios.post(`http://127.0.0.1:3000/api/v1/email/allCustomer`, req.body, { headers: { auth: "sdetrtgrgtregregretgertgrtg" } })
+          console.log(result.data)  
+          res.status(HttpStatusCode.Ok).send(result.data)
         } catch (error) {
             next(error)
         }

@@ -136,6 +136,24 @@ class CustomerController {
     }
   }
 
+  async getAllCustomerByAgentId(settingsConfig, req, res, next) {
+    try {
+      const logger = settingsConfig.logger;
+      const queryParams = req.query;
+      const {agentId}=req.params
+      logger.info(`[Customer_CONTROLLER] : Inside getAllCustomerByAgentId`);
+      const { rows, count } = await this.newCustomerService.getAllCustomerByAgentId(
+        settingsConfig,
+        agentId,
+        queryParams
+      );
+      res.set("X-Total-Count", count);
+      res.status(HttpStatusCode.Ok).json(await rows);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getCustomerById(settingsConfig, req, res, next) {
     try {
       const logger = settingsConfig.logger;

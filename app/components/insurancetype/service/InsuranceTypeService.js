@@ -66,7 +66,7 @@ class InsuranceTypeService {
     async getAllInsuranceType(settingsConfig,queryParams) {
         const t = await startTransaction();
         try {
-            const data = await insuranceTypeConfig.model.findAndCountAll({ transaction: t, ...parseFilterQueries(queryParams, insuranceTypeConfig.filter),...parseLimitAndOffset(queryParams) })
+            const data = await insuranceTypeConfig.model.findAndCountAll({ transaction: t })
             await t.commit();
             return data;
         }
@@ -78,15 +78,29 @@ class InsuranceTypeService {
     }
 
     //Get InsuranceType By Id
-    async getAllInsuranceTypeById(settingsConfig, insuranceTypeId) {
+    async getAllInsuranceTypeById(settingsConfig, insuranceTypeId,queryParams
+        
+        
+        
+        ) {
         const t = await startTransaction();
         try {
           const logger = settingsConfig.logger;
           logger.info(`[inSuranceService] : Inside getinSuranceByUsername`);
+          const attributeToReturn={
+           id:insuranceTypeConfig.fieldMapping.id,
+           name:insuranceTypeConfig.fieldMapping.insuranceName,
+           status:insuranceTypeConfig.fieldMapping.status
+              
+          }
+          // const attributeToReturn=Object.values(selectArray)
+          let selectArray = parseSelectFields(queryParams, attributeToReturn);
+
           const data = await insuranceTypeConfig.model.findOne({
             where: { id: insuranceTypeId },
             paranoid:false,
             transaction: t,
+            attributes:selectArray
           });
           return data
           await t.commit();

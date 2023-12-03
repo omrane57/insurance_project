@@ -9,12 +9,14 @@ const { checkJwtHS256 } = require("../../../middleware/authService");
 const PlanService = require("../../plan/service/PlanService");
 const customerService = require("../../customer/service/CustomerService");
 const PaymentDetailService = require("../../paymentdetail/service/PaymentDetailService");
+const agentCustomerDetail = require("../../agentcustomerdetail/service/agentCustomerDetailService");
 class PolicyController {
   constructor() {
     this.PolicyService = policyService;
     this.planService = new PlanService();
     this.customerService = customerService;
     this.paymentService = new PaymentDetailService();
+    this.agentcustomerdetail = agentCustomerDetail;
   }
 
   async createPolicy(settingsConfig, req, res, next) {
@@ -134,12 +136,12 @@ class PolicyController {
         settingsConfig,
         req.body
       );
-      let paymentBody={};
+      let paymentBody = {};
       paymentBody.paymentStatus = true;
       paymentBody.paymentMethod = paymentMethod;
       paymentBody.installationAmount = installationAmount;
       paymentBody.installationNo = 0;
-      
+
       let currentdate = date.getDate();
       let currentMonth = date.getMonth();
       let currentYear = date.getFullYear();
@@ -156,21 +158,21 @@ class PolicyController {
       //  installment1
       switch (typeofpremimum) {
         case "yearly": {
-          paymentBody.paymentDate=null
+          paymentBody.paymentDate = null;
 
           let finalDate;
-      paymentBody.paymentStatus = false;
-      paymentBody.paymentMethod = paymentMethod;
-      paymentBody.installationAmount = installationAmount;
+          paymentBody.paymentStatus = false;
+          paymentBody.paymentMethod = paymentMethod;
+          paymentBody.installationAmount = installationAmount;
 
           const totalInstallments = years * 1;
           for (let i = 0; i < totalInstallments; i++) {
-            paymentBody.installationNo=i+1
+            paymentBody.installationNo = i + 1;
 
             currentYear = currentYear + 1;
             finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
             // instllments
-            paymentBody.installationDate =finalDate
+            paymentBody.installationDate = finalDate;
             await this.paymentService.createPaymentDetail(
               settingsConfig,
               policyIds,
@@ -181,52 +183,52 @@ class PolicyController {
           break;
         }
         case "monthly": {
-          paymentBody.paymentDate=null
+          paymentBody.paymentDate = null;
 
           let finalDate;
           paymentBody.paymentStatus = false;
           paymentBody.paymentMethod = paymentMethod;
           paymentBody.installationAmount = installationAmount;
           const totalInstallments = years * 12;
-          for (let i = 0; i < totalInstallments-1; i++) {
-            paymentBody.installationNo=i+1
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
 
             if (currentMonth == 12) {
               currentYear = currentYear + 1;
               currentMonth = 1;
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // instllments
-              paymentBody.installationDate =finalDate
-            await this.paymentService.createPaymentDetail(
-              settingsConfig,
-              policyIds,
-              paymentBody
-            );
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             } else {
               currentMonth = currentMonth + 1;
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // instllments
-              paymentBody.installationDate =finalDate
-            await this.paymentService.createPaymentDetail(
-              settingsConfig,
-              policyIds,
-              paymentBody
-            );
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             }
           }
 
           break;
         }
         case "quaterly": {
-          paymentBody.paymentDate=null
+          paymentBody.paymentDate = null;
 
           let finalDate;
           paymentBody.paymentStatus = false;
           paymentBody.paymentMethod = paymentMethod;
           paymentBody.installationAmount = installationAmount;
           const totalInstallments = years * 4;
-          for (let i = 0; i < totalInstallments-1; i++) {
-            paymentBody.installationNo=i+1
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
 
             const addmonth = currentMonth + 4;
             if (addmonth > 12) {
@@ -234,37 +236,37 @@ class PolicyController {
               currentYear = currentYear + 1;
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // installments
-              paymentBody.installationDate =finalDate
-            await this.paymentService.createPaymentDetail(
-              settingsConfig,
-              policyIds,
-              paymentBody
-            );
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             } else {
               currentMonth = currentMonth + 3;
 
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // installments
-              paymentBody.installationDate =finalDate
-            await this.paymentService.createPaymentDetail(
-              settingsConfig,
-              policyIds,
-              paymentBody
-            );
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             }
           }
           break;
         }
         case "half-yearly": {
-          paymentBody.paymentDate=null
+          paymentBody.paymentDate = null;
 
           let finalDate;
           paymentBody.paymentStatus = false;
           paymentBody.paymentMethod = paymentMethod;
           paymentBody.installationAmount = installationAmount;
           const totalInstallments = years * 2;
-          for (let i = 0; i < totalInstallments-1; i++) {
-            paymentBody.installationNo=i+1
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
 
             const addmonth = currentMonth + 6;
             if (addmonth > 12) {
@@ -272,23 +274,342 @@ class PolicyController {
               currentYear = currentYear + 1;
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // installments
-              paymentBody.installationDate =finalDate
-            await this.paymentService.createPaymentDetail(
-              settingsConfig,
-              policyIds,
-              paymentBody
-            );
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             } else {
               currentMonth = currentMonth + 6;
 
               finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
               // installments
-              paymentBody.installationDate =finalDate
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            }
+          }
+          break;
+        }
+      }
+
+      res.status(HttpStatusCode.Ok).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async createPolicyByAgent(settingsConfig, req, res, next) {
+    try {
+      // const logger = settingsConfig.logger;
+      // logger.info(`[POLICY_CONTROLLER] : Inside createPolicy`);
+      const { amount, years, typeofpremimum, paymentMethod, customerId } =
+        req.body;
+        res
+      const { planId, agentId } = req.params;
+      const policyIds = v4();
+      let agentCustomerAccount = {};
+
+      req.body.id = policyIds;
+      const requiredFields = [
+        "amount",
+        "years",
+        "typeofpremimum",
+        "paymentMethod",
+        "customerId",
+      ];
+      for (const field of requiredFields) {
+        if (req.body[field] === null || req.body[field] === undefined) {
+          throw new Error("Please enter all fields");
+        }
+      }
+      if (
+        typeof amount != "number" ||
+        typeof years != "number" ||
+        typeof typeofpremimum != "string" ||
+        typeof paymentMethod != "string"
+      ) {
+        throw new Error("invalid input");
+      }
+      validateUuid(planId);
+      validateUuid(agentId);
+      validateUuid(customerId);
+      
+      const { rows, count } = await this.planService.getAllPlansById(
+        settingsConfig,
+        planId,
+        req.query
+      );
+      if (rows.length == 0) {
+        throw new Error("Plan Not Found");
+      }
+
+      req.body.insuranceType = rows[0].insuranceType;
+
+      req.body.planName = rows[0].planName;
+      req.body.profitRatio = rows[0].profitRatio;
+      req.body.requestStatus = false;
+      if (
+        typeofpremimum != "quaterly" &&
+        typeofpremimum != "yearly" &&
+        typeofpremimum != "half-yearly" &&
+        typeofpremimum != "monthly"
+      ) {
+        throw new Error("Invalid Premimum Type");
+      }
+      req.body.primimumType = typeofpremimum;
+      if (
+        amount < rows[0].minInvestmentAmount ||
+        amount > rows[0].maxInvestmentAmount
+      ) {
+        throw new Error(
+          "Invalid Amount,Please Read The Terms Of The Policy Carefully"
+        );
+      }
+      const sumAssured = amount * rows[0].profitRatio + amount;
+      req.body.sumAssured = sumAssured;
+      let customer = await this.customerService.getCustomerById(
+        settingsConfig,
+        customerId,
+        req.params
+      );
+   
+      req.body.customerId = customer.id;
+      req.body.planId = planId;
+      const customerAge = customer.age;
+      if (customerAge < rows[0].minAge && customerAge < rows[0].maxAge) {
+        throw new Error("You are Not Eligible To Apply For This Policy");
+      }
+      if (rows[0].status == false) {
+        throw new Error("You are Not Eligible To Apply For This Policy");
+      }
+      if (years < rows[0].policyTermMin || years < rows[0].policyTermMax) {
+        throw new Error(
+          "Invalid Year,Please Read The Policy Term and Condition CareFully"
+        );
+      }
+      let installationAmount;
+      const premimumYearly = amount / years;
+      if (typeofpremimum == "yearly") {
+        req.body.totalPremimumAmount = premimumYearly;
+        installationAmount = premimumYearly;
+      }
+      if (typeofpremimum == "quaterly") {
+        req.body.totalPremimumAmount = premimumYearly / 4;
+        installationAmount = premimumYearly / 4;
+      }
+      if (typeofpremimum == "half-yearly") {
+        req.body.totalPremimumAmount = premimumYearly / 2;
+        installationAmount = premimumYearly / 2;
+      }
+      if (typeofpremimum == "monthly") {
+        req.body.totalPremimumAmount = premimumYearly / 12;
+        installationAmount = premimumYearly / 12;
+      }
+      const date = new Date();
+      const newDate =
+        date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+      let startDate = new Date(date);
+
+      let maturityDate = new Date(startDate);
+      maturityDate.setFullYear(startDate.getFullYear() + years);
+      req.body.date = newDate;
+      const newMaturityDate =
+        maturityDate.getDate() +
+        "/" +
+        maturityDate.getMonth() +
+        "/" +
+        maturityDate.getFullYear();
+      req.body.maturityDate = newMaturityDate;
+      req.body.agentId = agentId;
+
+      const data = await this.PolicyService.createPolicy(
+        settingsConfig,
+        req.body
+      );
+      let paymentBody = {};
+      paymentBody.paymentStatus = true;
+      paymentBody.paymentMethod = paymentMethod;
+      paymentBody.installationAmount = installationAmount;
+      paymentBody.installationNo = 0;
+
+      let currentdate = date.getDate();
+      let currentMonth = date.getMonth();
+      let currentYear = date.getFullYear();
+      paymentBody.installationDate =
+        currentYear + "-" + currentMonth + "-" + currentdate;
+      paymentBody.paymentDate =
+        currentYear + "-" + currentMonth + "-" + currentdate;
+
+      // jkjk?
+      let customerById = await this.customerService.getCustomerById(
+        settingsConfig,
+        customerId,
+        req.params
+      );
+      if ((customerById = "")) {
+        throw Error("Customer With The Given Id Does Not Exist");
+      }
+      let commissionPercentage = rows[0].commissionAmount;
+
+      agentCustomerAccount.insuranceScheme = rows[0].planName;
+      let ca = (commissionPercentage * amount) / 100;
+      agentCustomerAccount.commissionAmount = ca;
+      agentCustomerAccount.withdrawStatus = false;
+      agentCustomerAccount.agentId = agentId;
+      agentCustomerAccount.date =
+        currentYear + "-" + currentMonth + "-" + currentdate;
+      agentCustomerAccount.customerName = customer.customerName;
+      await this.agentcustomerdetail.createAgentCustomerDetail(
+        settingsConfig,
+        agentCustomerAccount
+      );
+
+      await this.paymentService.createPaymentDetail(
+        settingsConfig,
+        policyIds,
+        paymentBody
+      );
+
+      //  installment1
+      switch (typeofpremimum) {
+        case "yearly": {
+          paymentBody.paymentDate = null;
+
+          let finalDate;
+          paymentBody.paymentStatus = false;
+          paymentBody.paymentMethod = paymentMethod;
+          paymentBody.installationAmount = installationAmount;
+
+          const totalInstallments = years * 1;
+          for (let i = 0; i < totalInstallments; i++) {
+            paymentBody.installationNo = i + 1;
+
+            currentYear = currentYear + 1;
+            finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+            // instllments
+            paymentBody.installationDate = finalDate;
             await this.paymentService.createPaymentDetail(
               settingsConfig,
               policyIds,
               paymentBody
             );
+          }
+
+          break;
+        }
+        case "monthly": {
+          paymentBody.paymentDate = null;
+
+          let finalDate;
+          paymentBody.paymentStatus = false;
+          paymentBody.paymentMethod = paymentMethod;
+          paymentBody.installationAmount = installationAmount;
+          const totalInstallments = years * 12;
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
+
+            if (currentMonth == 12) {
+              currentYear = currentYear + 1;
+              currentMonth = 1;
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // instllments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            } else {
+              currentMonth = currentMonth + 1;
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // instllments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            }
+          }
+
+          break;
+        }
+        case "quaterly": {
+          paymentBody.paymentDate = null;
+
+          let finalDate;
+          paymentBody.paymentStatus = false;
+          paymentBody.paymentMethod = paymentMethod;
+          paymentBody.installationAmount = installationAmount;
+          const totalInstallments = years * 4;
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
+
+            const addmonth = currentMonth + 4;
+            if (addmonth > 12) {
+              currentMonth = addmonth - 12;
+              currentYear = currentYear + 1;
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // installments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            } else {
+              currentMonth = currentMonth + 3;
+
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // installments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            }
+          }
+          break;
+        }
+        case "half-yearly": {
+          paymentBody.paymentDate = null;
+
+          let finalDate;
+          paymentBody.paymentStatus = false;
+          paymentBody.paymentMethod = paymentMethod;
+          paymentBody.installationAmount = installationAmount;
+          const totalInstallments = years * 2;
+          for (let i = 0; i < totalInstallments - 1; i++) {
+            paymentBody.installationNo = i + 1;
+
+            const addmonth = currentMonth + 6;
+            if (addmonth > 12) {
+              currentMonth = addmonth - 12;
+              currentYear = currentYear + 1;
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // installments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
+            } else {
+              currentMonth = currentMonth + 6;
+
+              finalDate = currentYear + "-" + currentMonth + "-" + currentdate;
+              // installments
+              paymentBody.installationDate = finalDate;
+              await this.paymentService.createPaymentDetail(
+                settingsConfig,
+                policyIds,
+                paymentBody
+              );
             }
           }
           break;

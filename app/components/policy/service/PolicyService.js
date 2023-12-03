@@ -55,8 +55,9 @@ class PolicyService {
         requestStatus: policyConfig.fieldMapping.requestStatus,
         customer_id: policyConfig.fieldMapping.customer_id,
         agent_id: policyConfig.fieldMapping.agent_id,
-        plan_id: policyConfig.fieldMapping.plan_id
-   
+        plan_id: policyConfig.fieldMapping.plan_id,
+        aadharMetadata: policyConfig.fieldMapping.aadharMetadata,
+        panMetadata: policyConfig.fieldMapping.panMetadata,
       };
       const attributeToReturn = Object.values(selectArray);
       const includeQuery = queryParams.include || [];
