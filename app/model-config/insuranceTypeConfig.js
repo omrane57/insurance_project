@@ -35,6 +35,14 @@ class InsuranceTypeConfig {
                     },
                 };
             },
+            insuranceName: (insuranceName) => {
+            
+                return {
+                  [this.fieldMapping.insuranceName]: {
+                    [Op.like]: `%${insuranceName}%`,
+                  },
+                };
+              },
         })
     }
 }

@@ -14,7 +14,7 @@ class InsuranceTypeController {
         try {
             const logger = settingsConfig.logger;
             logger.info(`[InsuranceType_CONTROLLER] : Inside getAllInsuranceType`);
-            const {rows,count} = await this.insuranceservice.getAllInsuranceType(settingsConfig)
+            const {rows,count} = await this.insuranceservice.getAllInsuranceType(settingsConfig,req.query)
             res.set('X-Total-Count', count)
             res.status(HttpStatusCode.Ok).json(rows)
         }

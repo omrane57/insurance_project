@@ -3,6 +3,7 @@ const insuranceTypeConfig = require("../../../model-config/insuranceTypeConfig")
 const { startTransaction } = require("../../../sequelize/transaction");
 const { v4 } = require("uuid");
 const fs = require('fs/promises');
+const { parseLimitAndOffset, unmarshalBody, parseSelectFields, parseFilterQueries } = require('../../../utils/request');
 function generateUniqueFileName(originalFileName) {
 
     const timestamp = Date.now();
@@ -62,10 +63,10 @@ class InsuranceTypeService {
     }
 
     //Get All Insurance
-    async getAllInsuranceType(settingsConfig) {
+    async getAllInsuranceType(settingsConfig,queryParams) {
         const t = await startTransaction();
         try {
-            const data = await insuranceTypeConfig.model.findAndCountAll({ transaction: t })
+            const data = await insuranceTypeConfig.model.findAndCountAll({ transaction: t, ...parseFilterQueries(queryParams, insuranceTypeConfig.filter),...parseLimitAndOffset(queryParams) })
             await t.commit();
             return data;
         }
